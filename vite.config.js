@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/ElunaSnippetGenerator/',
+  base: '',
   plugins: [
     vue(),
   ],
@@ -16,13 +16,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    cssCodeSplit: false,
-    rollupOptions: {
-        output: {
-            manualChanks: {
-                'vendor': ['vue']
-            }
-        }
-    }
+    cssCodeSplit: false
   }
 })

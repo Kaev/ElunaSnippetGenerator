@@ -62,7 +62,7 @@
 <script setup>
     import { ref } from 'vue'
     import { Toast } from 'bootstrap'
-    import * as Sqrl from 'squirrelly'
+    import * as Sqrl from 'squirrelly/dist/browser/squirrelly.min.js'
     
     const eventCategories = ref([
     {
@@ -393,7 +393,7 @@ local {{identifier.name}} = {{identifier.id}};
 {{/if}}
 {{/each_}}
 `;
-const multistateTemplate = `
+    const multistateTemplate = `
 `;
 
     const code = ref('');
