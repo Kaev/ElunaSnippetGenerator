@@ -1,12 +1,24 @@
 [
     {
-        "name": "Cached Database Example",
+        "name": "Cached Database Single Threaded Example",
         "author": "Kaev",
         "type": "singlethreaded",
         "code": "Test1"
     },
     {
-        "name": "Cached Database Example",
+        "name": "Cached Database Multistate Example",
+        "author": "Kaev",
+        "type": "multistate",
+        "code": "Test2"
+    },
+    {
+        "name": "Cached Database Single Threaded Example",
+        "author": "Kaev",
+        "type": "singlethreaded",
+        "code": "Test1"
+    },
+    {
+        "name": "Cached Database Multistate Example",
         "author": "Kaev",
         "type": "multistate",
         "code": "Test2"
