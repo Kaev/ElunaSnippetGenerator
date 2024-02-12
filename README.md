@@ -1,6 +1,7 @@
 # Eluna Snippet Generator
 
 A little web frontend that generates Eluna snippets for you.
+
 [Click here](https://kaev.github.io/ElunaSnippetGenerator/) for a running version on GitHub Pages.
 
 ## Recommended IDE Setup
