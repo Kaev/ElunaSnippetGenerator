@@ -15,7 +15,9 @@
                                     <template v-for="(event, eventIndex) in eventCategory.events" :key="eventIndex">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" :id="'switch_' + categoryIndex + '_' + eventIndex" @change="onHookCheckStateChanged(event)">
-                                            <label class="form-check-label user-select-none" :for="'switch_' + categoryIndex + '_' + eventIndex">{{ event.title }}</label>
+                                            <label class="form-check-label user-select-none" :for="'switch_' + categoryIndex + '_' + eventIndex" data-bs-toggle="tooltip" data-bs-html="true" :data-bs-title="'Event: ' + event.name + '<br />Id: ' + event.id + '<br />Args: ' + event.args.join(', ')">
+                                                {{ event.title }}
+                                            </label>
                                         </div>
                                     </template>
                                 </div>
@@ -101,7 +103,7 @@
 
 <script setup>
     import { ref, onMounted, watchEffect } from 'vue'
-    import { Toast } from 'bootstrap'
+    import { Toast, Tooltip } from 'bootstrap'
     import * as Sqrl from 'squirrelly/dist/browser/squirrelly.min.js'
     
     const eventCategories = ref([
@@ -444,9 +446,9 @@ if (GetStateMapId() == -1 or IsCompatibilityMode()) then
 
 {{/each_}}
 {{/each_}}
-
 {{@each(it.hooks) => hook}}
 {{@if(hook.worldStateRegistrations.length > 0)}}
+
     -- {{hook.category}} Events
 {{/if}}
 {{@each(hook.worldStateIdentifiers) => identifier}}
@@ -470,9 +472,9 @@ if (GetStateMapId() == {{ it.mapId }} or IsCompatibilityMode()) then
 
 {{/each_}}
 {{/each_}}
-
 {{@each(it.hooks) => hook}}
 {{@if(hook.mapStateRegistrations.length > 0)}}
+
     -- {{hook.category}} Events
 {{/if}}
 {{@each(hook.mapStateIdentifiers) => identifier}}
@@ -513,6 +515,11 @@ end
     };
 
     onMounted(() => {
+        // Enable Bootstrap tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+        // Fetch user snippets
         fetchUserSnippets();
     });
 
@@ -688,9 +695,15 @@ end
         height: 100vh;
     }
 
+    .tooltip-inner {
+        text-align: left;
+        max-width: 400px !important;
+    }
+
     .toast {
         position: absolute;
         bottom: 5px;
         right: 20px;
     }
+
 </style>
