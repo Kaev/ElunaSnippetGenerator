@@ -35,7 +35,7 @@
                                 </div>
                                 <div v-if="elunaState === 'multistate'">
                                     <template v-for="(snippet, index) in multistateSnippets" :key="index">
-                                        <div class="card">
+                                        <div class="card mt-1">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ snippet.name }}</h5>
                                                 <h6 class="card-subtitle mb-2 text-body-secondary">by {{ snippet.author }}</h6>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div v-else>
                                     <template v-for="(snippet, index) in singleThreadedSnippets" :key="index">
-                                        <div class="card">
+                                        <div class="card mt-1">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ snippet.name }}</h5>
                                                 <h6 class="card-subtitle mb-2 text-body-secondary">by {{ snippet.author }}</h6>
