@@ -107,6 +107,9 @@
     import { Toast, Tooltip } from 'bootstrap'
     import * as Sqrl from 'squirrelly/dist/browser/squirrelly.min.js'
     
+    // Point this to another location if you want to host your own, private user snippets
+    const userSnippetsUrl = 'https://raw.githubusercontent.com/Kaev/ElunaSnippetGenerator/gh-pages/snippets.json';
+
     const eventCategories = ref([
     {
         category: "Battleground",
@@ -507,7 +510,7 @@ end
 
     const fetchUserSnippets = async () => {
         try {
-            const response = await fetch('https://raw.githubusercontent.com/Kaev/ElunaSnippetGenerator/gh-pages/snippets.json');
+            const response = await fetch(userSnippetsUrl);
             const data = await response.json();
             userSnippets.value = data;
         } catch (error) {
