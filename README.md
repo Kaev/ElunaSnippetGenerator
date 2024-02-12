@@ -1,6 +1,7 @@
 # Eluna Snippet Generator
 
 A little web frontend that generates Eluna snippets for you.
+[Click here](https://kaev.github.io/ElunaSnippetGenerator/) for a running version on GitHub Pages.
 
 ## Recommended IDE Setup
 
@@ -26,10 +27,4 @@ npm run dev
 
 ```sh
 npm run build
-```
-
-### Deploy to GitHub Pages
-
-```sh
-npm run deploy -- -m "Deploy to GitHub Pages"
 ```
