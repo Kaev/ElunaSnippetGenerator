@@ -24,9 +24,7 @@ jobs:
   deploy:
     name: Deploy
     needs: build
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
