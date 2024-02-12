@@ -69,6 +69,10 @@
                             <input v-model="elunaState" type="radio" class="btn-check" value="singlethreaded" id="elunasinglethreaded" name="elunaState" autocomplete="off" @change="generateCode">
                             <label class="btn btn-outline-secondary" for="elunasinglethreaded">Single Threaded</label>
                         </div>
+                        <div class="form-floating mt-1" v-if="elunaState === 'multistate'">
+                            <input v-model="mapId" type="number" class="form-control" id="mapId" placeholder="1" @input="generateCode">
+                            <label for="mapId">Map Id</label>
+                        </div>
 
                         <p class="card-text mt-2">Made with ♥ by Kaev for the <a href="https://discord.gg/2FVqBGCkvk">WoW Modding</a> and <a href="https://discord.gg/h8jdsgGTg8">Eluna</a> communities</p>
                     </div>
@@ -183,43 +187,43 @@
     {
         category: "Group",
         events: [
-            { name: "GROUP_EVENT_ON_MEMBER_ADD", id: "1", args:  [ "event", "group", "guid" ], title: "Member Add" },
-            { name: "GROUP_EVENT_ON_MEMBER_INVITE", id: "2", args:  [ "event", "group", "guid" ], title: "Member Invite" },
-            { name: "GROUP_EVENT_ON_MEMBER_REMOVE", id: "3", args:  [ "event", "group", "guid", "method" ], title: "Member Remove" },
-            { name: "GROUP_EVENT_ON_LEADER_CHANGE", id: "4", args:  [ "event", "group", "newLeaderGuid", "oldLeaderGuid" ], title: "Leader Change" },
-            { name: "GROUP_EVENT_ON_DISBAND", id: "5", args:  [ "event", "group" ], title: "Disband" },
-            { name: "GROUP_EVENT_ON_CREATE", id: "6", args:  [ "event", "group", "leaderGuid", "groupType" ], title: "Create" },
-            { name: "GROUP_EVENT_ON_MEMBER_ACCEPT", id: "7", args:  [ "event", "group", "player" ], title: "Member Accept" },
+            { name: "GROUP_EVENT_ON_MEMBER_ADD", id: "1", args:  [ "event", "group", "guid" ], title: "Member Add", inWorldState: true },
+            { name: "GROUP_EVENT_ON_MEMBER_INVITE", id: "2", args:  [ "event", "group", "guid" ], title: "Member Invite", inWorldState: true },
+            { name: "GROUP_EVENT_ON_MEMBER_REMOVE", id: "3", args:  [ "event", "group", "guid", "method" ], title: "Member Remove", inWorldState: true },
+            { name: "GROUP_EVENT_ON_LEADER_CHANGE", id: "4", args:  [ "event", "group", "newLeaderGuid", "oldLeaderGuid" ], title: "Leader Change", inWorldState: true },
+            { name: "GROUP_EVENT_ON_DISBAND", id: "5", args:  [ "event", "group" ], title: "Disband", inWorldState: true },
+            { name: "GROUP_EVENT_ON_CREATE", id: "6", args:  [ "event", "group", "leaderGuid", "groupType" ], title: "Create", inWorldState: true },
+            { name: "GROUP_EVENT_ON_MEMBER_ACCEPT", id: "7", args:  [ "event", "group", "player" ], title: "Member Accept", inWorldState: true },
         ],
         registerHookName: "RegisterGroupEvent"
     },
     {
         category: "Guild",
         events: [
-            { name: "GUILD_EVENT_ON_ADD_MEMBER", id: "1", args:  [ "event", "guild", "player", "rank" ], title: "Add Member" },
-            { name: "GUILD_EVENT_ON_REMOVE_MEMBER", id: "2", args:  [ "event", "guild", "player", "isDisbanding" ], title: "Remove Member" },
-            { name: "GUILD_EVENT_ON_MOTD_CHANGE", id: "3", args:  [ "event", "guild", "newMOTD" ], title: "MOTD Change" },
-            { name: "GUILD_EVENT_ON_INFO_CHANGE", id: "4", args:  [ "event", "guild", "newInfo" ], title: "Info Change" },
-            { name: "GUILD_EVENT_ON_CREATE", id: "5", args:  [ "event", "guild", "leader", "name" ], title: "Create" },
-            { name: "GUILD_EVENT_ON_DISBAND", id: "6", args:  [ "event", "guild" ], title: "Disband" },
-            { name: "GUILD_EVENT_ON_MONEY_WITHDRAW", id: "7", args:  [ "event", "guild", "player", "amount", "isRepair" ], title: "Money Withdraw" },
-            { name: "GUILD_EVENT_ON_MONEY_DEPOSIT", id: "8", args:  [ "event", "guild", "player", "amount" ], title: "Money Deposit" },
-            { name: "GUILD_EVENT_ON_ITEM_MOVE", id: "9", args:  [ "event", "guild", "player", "item", "isSrcBank", "srcContainer", "srcSlotId", "isDestBank", "destContainer", "destSlotId" ], title: "Item Move" },
-            { name: "GUILD_EVENT_ON_EVENT", id: "10", args:  [ "event", "guild", "eventType", "playerGuidLow1", "playerGuidLow2", "newRank" ], title: "Event" },
-            { name: "GUILD_EVENT_ON_BANK_EVENT", id: "11", args:  [ "event", "guild", "eventType", "tabId", "playerGuidLow", "itemOrMoney", "itemStackCount", "destTabId" ], title: "Bank Event" },
+            { name: "GUILD_EVENT_ON_ADD_MEMBER", id: "1", args:  [ "event", "guild", "player", "rank" ], title: "Add Member", inWorldState: true },
+            { name: "GUILD_EVENT_ON_REMOVE_MEMBER", id: "2", args:  [ "event", "guild", "player", "isDisbanding" ], title: "Remove Member", inWorldState: true },
+            { name: "GUILD_EVENT_ON_MOTD_CHANGE", id: "3", args:  [ "event", "guild", "newMOTD" ], title: "MOTD Change", inWorldState: true },
+            { name: "GUILD_EVENT_ON_INFO_CHANGE", id: "4", args:  [ "event", "guild", "newInfo" ], title: "Info Change", inWorldState: true },
+            { name: "GUILD_EVENT_ON_CREATE", id: "5", args:  [ "event", "guild", "leader", "name" ], title: "Create", inWorldState: true },
+            { name: "GUILD_EVENT_ON_DISBAND", id: "6", args:  [ "event", "guild" ], title: "Disband", inWorldState: true },
+            { name: "GUILD_EVENT_ON_MONEY_WITHDRAW", id: "7", args:  [ "event", "guild", "player", "amount", "isRepair" ], title: "Money Withdraw", inWorldState: true },
+            { name: "GUILD_EVENT_ON_MONEY_DEPOSIT", id: "8", args:  [ "event", "guild", "player", "amount" ], title: "Money Deposit", inWorldState: true },
+            { name: "GUILD_EVENT_ON_ITEM_MOVE", id: "9", args:  [ "event", "guild", "player", "item", "isSrcBank", "srcContainer", "srcSlotId", "isDestBank", "destContainer", "destSlotId" ], title: "Item Move", inWorldState: true },
+            { name: "GUILD_EVENT_ON_EVENT", id: "10", args:  [ "event", "guild", "eventType", "playerGuidLow1", "playerGuidLow2", "newRank" ], title: "Event", inWorldState: true },
+            { name: "GUILD_EVENT_ON_BANK_EVENT", id: "11", args:  [ "event", "guild", "eventType", "tabId", "playerGuidLow", "itemOrMoney", "itemStackCount", "destTabId" ], title: "Bank Event", inWorldState: true },
         ],
         registerHookName: "RegisterGuildEvent"
     },
     {
         category: "Instance",
         events: [
-            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args:  [ "event", "instance_Data", "map" ], title: "Initialize" },
-            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args:  [ "event", "instance_Data", "map" ], title: "Load" },
-            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args:  [ "event", "instance_Data", "map", "diff" ], title: "Update" },
-            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args:  [ "event", "instance_Data", "map", "player" ], title: "Player Enter" },
-            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args:  [ "event", "instance_Data", "map", "creature" ], title: "Creature Create" },
-            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instance_Data", "map", "gameObject" ], title: "Gameobject Create" },
-            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instance_Data", "map" ], title: "Check Encounter In Progress" },
+            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args:  [ "event", "instanceData", "map" ], title: "Initialize" },
+            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args:  [ "event", "instanceData", "map" ], title: "Load" },
+            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args:  [ "event", "instanceData", "map", "diff" ], title: "Update" },
+            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args:  [ "event", "instanceData", "map", "player" ], title: "Player Enter" },
+            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args:  [ "event", "instanceData", "map", "creature" ], title: "Creature Create" },
+            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instanceData", "map", "gameObject" ], title: "Gameobject Create" },
+            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instanceData", "map" ], title: "Check Encounter In Progress" },
         ],
         registerHookName: "RegisterInstanceEvent"
     },
@@ -246,13 +250,13 @@
     {
         category: "Map",
         events: [
-            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args:  [ "event", "instance_Data", "map" ], title: "Initialize" },
-            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args:  [ "event", "instance_Data", "map" ], title: "Load" },
-            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args:  [ "event", "instance_Data", "map", "diff" ], title: "Update" },
-            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args:  [ "event", "instance_Data", "map", "player" ], title: "Player Enter" },
-            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args:  [ "event", "instance_Data", "map", "creature" ], title: "Creature Create" },
-            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instance_Data", "map", "gameObject" ], title: "Gameobject Create" },
-            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instance_Data", "map" ], title: "Check Encounter In Progress" },
+            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args:  [ "event", "instanceData", "map" ], title: "Initialize" },
+            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args:  [ "event", "instanceData", "map" ], title: "Load" },
+            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args:  [ "event", "instanceData", "map", "diff" ], title: "Update" },
+            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args:  [ "event", "instanceData", "map", "player" ], title: "Player Enter" },
+            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args:  [ "event", "instanceData", "map", "creature" ], title: "Creature Create" },
+            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instanceData", "map", "gameObject" ], title: "Gameobject Create" },
+            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instanceData", "map" ], title: "Check Encounter In Progress" },
         ],
         registerHookName: "RegisterMapEvent"
     },
@@ -267,8 +271,8 @@
     {
         category: "Player",
         events: [
-            { name: "PLAYER_EVENT_ON_CHARACTER_CREATE", id: "1", args:  [ "event", "player" ], title: "Character Create" },
-            { name: "PLAYER_EVENT_ON_CHARACTER_DELETE", id: "2", args:  [ "event", "guid" ], title: "Character Delete" },
+            { name: "PLAYER_EVENT_ON_CHARACTER_CREATE", id: "1", args:  [ "event", "player" ], title: "Character Create", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_CHARACTER_DELETE", id: "2", args:  [ "event", "guid" ], title: "Character Delete", inWorldState: true },
             { name: "PLAYER_EVENT_ON_LOGIN", id: "3", args:  [ "event", "player" ], title: "Login" },
             { name: "PLAYER_EVENT_ON_LOGOUT", id: "4", args:  [ "event", "player" ], title: "Logout" },
             { name: "PLAYER_EVENT_ON_SPELL_CAST", id: "5", args:  [ "event", "player", "spell", "skipCheck" ], title: "Spell Cast" },
@@ -347,11 +351,11 @@
             { name: "MAP_EVENT_ON_PLAYER_LEAVE", id: "22", args:  [ "event", "map", "player" ], title: "Map Player Leave" },
             { name: "MAP_EVENT_ON_UPDATE", id: "23", args:  [ "event", "map", "diff" ], title: "Map Update" },
             { name: "TRIGGER_EVENT_ON_TRIGGER", id: "24", args:  [ "event", "player", "triggerId" ], title: "Trigger" },
-            { name: "WEATHER_EVENT_ON_CHANGE", id: "25", args:  [ "event", "zoneId", "state", "grade" ], title: "Weather Change" },
-            { name: "AUCTION_EVENT_ON_ADD", id: "26", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Add" },
-            { name: "AUCTION_EVENT_ON_REMOVE", id: "27", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Remove" },
-            { name: "AUCTION_EVENT_ON_SUCCESSFUL", id: "28", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Successful" },
-            { name: "AUCTION_EVENT_ON_EXPIRE", id: "29", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Expire" },
+            { name: "WEATHER_EVENT_ON_CHANGE", id: "25", args:  [ "event", "zoneId", "state", "grade" ], title: "Weather Change", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_ADD", id: "26", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Add", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_REMOVE", id: "27", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Remove", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_SUCCESSFUL", id: "28", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Successful", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_EXPIRE", id: "29", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Expire", inWorldState: true },
             { name: "ADDON_EVENT_ON_MESSAGE", id: "30", args:  [ "event", "sender", "type", "prefix", "msg", "target" ], title: "Addon Message" },
             { name: "WORLD_EVENT_ON_DELETE_CREATURE", id: "31", args:  [ "event", "creature" ], title: "Delete Creature" },
             { name: "WORLD_EVENT_ON_DELETE_GAMEOBJECT", id: "32", args:  [ "event", "gameObject" ], title: "Delete Gameobject" },
@@ -430,10 +434,62 @@ local {{identifier.name}} = {{identifier.id}};
 {{/each_}}
 `;
     const multistateTemplate = `
+-- World State or Compatibility Mode
+if (GetStateMapId() == -1 or IsCompatibilityMode()) then
+{{@each(it.hooks) => hook}}
+{{@each(hook.worldStateFunctions) => func}}
+    local function {{func.name}}({{func.args}})
+
+    end
+
+{{/each_}}
+{{/each_}}
+
+{{@each(it.hooks) => hook}}
+{{@if(hook.worldStateRegistrations.length > 0)}}
+    -- {{hook.category}} Events
+{{/if}}
+{{@each(hook.worldStateIdentifiers) => identifier}}
+    local {{identifier.name}} = {{identifier.id}};
+{{/each_}}
+{{@each(hook.worldStateRegistrations) => registration}}
+    {{registration.registerHookName}}({{registration.name}}, {{registration.functionName}});
+{{/each_}}
+{{@if(hook.worldStateRegistrations.length > 0)}}
+{{/if}}
+{{/each_}}
+end
+
+-- Map State State or Compatibility Mode
+if (GetStateMapId() == {{ it.mapId }} or IsCompatibilityMode()) then
+{{@each(it.hooks) => hook}}
+{{@each(hook.mapStateFunctions) => func}}
+    local function {{func.name}}({{func.args}})
+
+    end
+
+{{/each_}}
+{{/each_}}
+
+{{@each(it.hooks) => hook}}
+{{@if(hook.mapStateRegistrations.length > 0)}}
+    -- {{hook.category}} Events
+{{/if}}
+{{@each(hook.mapStateIdentifiers) => identifier}}
+    local {{identifier.name}} = {{identifier.id}};
+{{/each_}}
+{{@each(hook.mapStateRegistrations) => registration}}
+    {{registration.registerHookName}}({{registration.name}}, {{registration.functionName}});
+{{/each_}}
+{{@if(hook.mapStateRegistrations.length > 0)}}
+{{/if}}
+{{/each_}}
+end
 `;
 
     const code = ref('');
     const elunaState = ref('multistate');
+    const mapId = ref(1);
     const toast = ref(null);
     const userSnippets = ref([]);
     const singleThreadedSnippets = ref([]);
@@ -501,7 +557,56 @@ local {{identifier.name}} = {{identifier.id}};
     function generateCodeForMultistate()
     {
         let hooks = [];
-        var result = Sqrl.render(multistateTemplate, hooks);
+
+        eventCategories.value.forEach(eventCategory => {
+            let hook = {
+                category: eventCategory.category,
+                mapStateFunctions: [],
+                mapStateIdentifiers: [],
+                mapStateRegistrations: [],
+                worldStateFunctions: [],
+                worldStateIdentifiers: [],
+                worldStateRegistrations: []
+            };
+
+            eventCategory.events.forEach(event => {
+                if (event.checked === true) {
+                    const functionName = `On${transformEventName(event.name)}`;
+                    var func = {
+                        name: functionName,
+                        args: event.args.join(", ")
+                    };
+                    var identifier = {
+                        name: event.name,
+                        id: event.id
+                    };
+                    var registration = {
+                        registerHookName: eventCategory.registerHookName,
+                        name: event.name,
+                        functionName: functionName
+                    };
+
+                    if (event.inWorldState === true) {
+                        hook.worldStateFunctions.push(func);
+                        hook.worldStateIdentifiers.push(identifier);
+                        hook.worldStateRegistrations.push(registration);
+                    } else {
+                        hook.mapStateFunctions.push(func);
+                        hook.mapStateIdentifiers.push(identifier);
+                        hook.mapStateRegistrations.push(registration);
+                    }
+
+
+                }
+            });
+
+            hooks.push(hook);
+        });
+
+        var result = Sqrl.render(multistateTemplate, {
+            mapId: mapId.value,
+            hooks: hooks
+        });
         code.value = result.trim();
     }
 
