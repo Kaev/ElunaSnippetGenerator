@@ -1,12 +1,15 @@
 {
   "name": "eluna-snippet-generator",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "homepage": "https://kaev.github.io/ElunaSnippetGenerator",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "vite build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
@@ -18,6 +21,7 @@
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@vitejs/plugin-vue": "^5.0.3",
+    "gh-pages": "^6.1.1",
     "vite": "^5.0.11"
   }
 }
