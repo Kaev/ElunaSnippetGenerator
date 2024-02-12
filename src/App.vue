@@ -542,7 +542,7 @@ end
 
     function onShowUserSnippet(snippet)
     {
-        code.value = snippet.code;
+        code.value = snippet.code.trim();
     }
 
     function generateCode()
