@@ -4,7 +4,6 @@ on:
     branches: [ "main" ]
 jobs:
   build:
-    permissions: write-all
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,6 +24,9 @@ jobs:
   deploy:
     name: Deploy
     needs: build
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
