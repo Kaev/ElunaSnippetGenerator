@@ -1,26 +1,14 @@
 [
     {
-        "name": "Cached Database Single Threaded Example",
+        "name": "Example Single Threaded User Snippet",
         "author": "Kaev",
         "type": "singlethreaded",
-        "code": "Test1"
+        "code": "-- Add your Lua code here :)"
     },
     {
-        "name": "Cached Database Multistate Example",
+        "name": "Example Multistate User Snippet",
         "author": "Kaev",
         "type": "multistate",
-        "code": "Test2"
-    },
-    {
-        "name": "Cached Database Single Threaded Example",
-        "author": "Kaev",
-        "type": "singlethreaded",
-        "code": "Test1"
-    },
-    {
-        "name": "Cached Database Multistate Example",
-        "author": "Kaev",
-        "type": "multistate",
-        "code": "Test2"
+        "code": "-- Add your Lua code here :)"
     }
 ]
