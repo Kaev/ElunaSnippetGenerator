@@ -14,7 +14,7 @@
                                 <div class="accordion-body">
                                     <template v-for="(event, eventIndex) in eventCategory.events" :key="eventIndex">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" :id="'switch_' + categoryIndex + '_' + eventIndex" @change="changedEventChecked(event)">
+                                            <input class="form-check-input" type="checkbox" role="switch" :id="'switch_' + categoryIndex + '_' + eventIndex" @change="onHookCheckStateChanged(event)">
                                             <label class="form-check-label user-select-none" :for="'switch_' + categoryIndex + '_' + eventIndex">{{ event.title }}</label>
                                         </div>
                                     </template>
@@ -22,15 +22,51 @@
                             </div>
                         </div>
                     </template>
+                    <div class="accordion-item" v-if="userSnippets.length > 0">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target='#collapse_usersnippets'>
+                                User Snippets
+                            </button>
+                        </h2>
+                        <div id="collapse_usersnippets" class="accordion-collapse collapse" data-bs-parent="#accordion_event_categories">
+                            <div class="accordion-body">
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-primary" @click="generateCode">Hide Current User Snippet</button>
+                                </div>
+                                <div v-if="elunaState === 'multistate'">
+                                    <template v-for="(snippet, index) in multistateSnippets" :key="index">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ snippet.name }}</h5>
+                                                <h6 class="card-subtitle mb-2 text-body-secondary">by {{ snippet.author }}</h6>
+                                                <button type="button" class="btn btn-primary" @click="onShowUserSnippet(snippet)">Show</button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                                <div v-else>
+                                    <template v-for="(snippet, index) in singleThreadedSnippets" :key="index">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ snippet.name }}</h5>
+                                                <h6 class="card-subtitle mb-2 text-body-secondary">by {{ snippet.author }}</h6>
+                                                <button type="button" class="btn btn-primary" @click="onShowUserSnippet(snippet)">Show</button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card mt-2">
                     <div class="card-body">
                         <h5 class="card-title">Options</h5>
                         <div class="btn-group" role="group">
-                            <input ref="elunaType" type="radio" class="btn-check" name="elunatype" id="elunamultistate" autocomplete="off" @change="changedElunaType" checked>
+                            <input v-model="elunaState" type="radio" value="multistate" class="btn-check" id="elunamultistate" name="elunaState" autocomplete="off" @change="generateCode" checked>
                             <label class="btn btn-outline-primary" for="elunamultistate">Multistate</label>
 
-                            <input type="radio" class="btn-check" name="elunatype" id="elunasinglethreaded" autocomplete="off" @change="changedElunaType">
+                            <input v-model="elunaState" type="radio" class="btn-check" value="singlethreaded" id="elunasinglethreaded" name="elunaState" autocomplete="off" @change="generateCode">
                             <label class="btn btn-outline-secondary" for="elunasinglethreaded">Single Threaded</label>
                         </div>
 
@@ -60,7 +96,7 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue'
+    import { ref, onMounted, watchEffect } from 'vue'
     import { Toast } from 'bootstrap'
     import * as Sqrl from 'squirrelly/dist/browser/squirrelly.min.js'
     
@@ -397,18 +433,40 @@ local {{identifier.name}} = {{identifier.id}};
 `;
 
     const code = ref('');
-    const elunaType = ref(null);
+    const elunaState = ref('multistate');
     const toast = ref(null);
+    const userSnippets = ref([]);
+    const singleThreadedSnippets = ref([]);
+    const multistateSnippets = ref([]);
 
     // Set initial checked state
     eventCategories.value.forEach(eventCategory => {
         eventCategory.events.forEach(event => {
             event.checked = false;
         })
-    })
+    });
+
+    const fetchUserSnippets = async () => {
+        try {
+            const response = await fetch('https://raw.githubusercontent.com/Kaev/ElunaSnippetGenerator/gh-pages/snippets.json');
+            const data = await response.json();
+            userSnippets.value = data;
+        } catch (error) {
+            console.error('Error fetching user snippets:', error);
+        }
+    };
+
+    onMounted(() => {
+        fetchUserSnippets();
+    });
+
+    watchEffect(() => {
+        multistateSnippets.value = userSnippets.value.filter(snippet => snippet.type === 'multistate');
+        singleThreadedSnippets.value = userSnippets.value.filter(snippet => snippet.type === 'singlethreaded');
+    });
 
     function transformEventName(eventName) {
-        // Remove all occurrences of "_ON"
+        // Remove all occurrences of "_EVENT_ON"
         let resultString = eventName.replace(/_EVENT_ON/g, '');
 
         // Convert to lowercase and replace underscores with uppercase letters
@@ -420,21 +478,20 @@ local {{identifier.name}} = {{identifier.id}};
         return resultString;
     }
 
-    function changedEventChecked(event)
+    function onHookCheckStateChanged(event)
     {
         event.checked = !event.checked;
         generateCode();
     }
 
-    function changedElunaType()
+    function onShowUserSnippet(snippet)
     {
-        generateCode();
+        code.value = snippet.code;
     }
 
     function generateCode()
     {
-        const isMultistate = elunaType.value.checked;
-        if (isMultistate) {
+        if (elunaState.value === 'multistate') {
             generateCodeForMultistate();
         } else {
             generateCodeForSingleThreaded();
