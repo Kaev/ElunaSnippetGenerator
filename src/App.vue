@@ -34,7 +34,7 @@
                             <label class="btn btn-outline-secondary" for="elunasinglethreaded">Single Threaded</label>
                         </div>
 
-                        <p class="card-text mt-2">Made with ♥ by Kaev for the WoW Modding and Eluna communities</p>
+                        <p class="card-text mt-2">Made with ♥ by Kaev for the <a href="https://discord.gg/2FVqBGCkvk">WoW Modding</a> and <a href="https://discord.gg/h8jdsgGTg8">Eluna</a> communities</p>
                     </div>
                 </div>
             </div>
