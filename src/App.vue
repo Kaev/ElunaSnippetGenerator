@@ -71,12 +71,13 @@
                             <input v-model="elunaState" type="radio" class="btn-check" value="singlethreaded" id="elunasinglethreaded" name="elunaState" autocomplete="off" @change="generateCode">
                             <label class="btn btn-outline-secondary" for="elunasinglethreaded">Single Threaded</label>
                         </div>
-                        <div class="form-floating mt-1" v-if="elunaState === 'multistate'">
+                        <div class="form-floating mt-2" v-if="elunaState === 'multistate'">
                             <input v-model="mapId" type="number" class="form-control" id="mapId" placeholder="1" @input="generateCode">
                             <label for="mapId">Map Id</label>
                         </div>
 
-                        <p class="card-text mt-2">Made with ♥ by Kaev for the <a href="https://discord.gg/2FVqBGCkvk">WoW Modding</a> and <a href="https://discord.gg/h8jdsgGTg8">Eluna</a> communities</p>
+                        <p class="card-text mt-2">Add your own user snippets on the <a href="https://github.com/Kaev/ElunaSnippetGenerator/">GitHub repository</a>.</p>
+                        <p class="card-text">Made with <span style="color: red;">♡</span> by Kaev for the <a href="https://discord.gg/2FVqBGCkvk">WoW Modding</a> and <a href="https://discord.gg/h8jdsgGTg8">Eluna</a> communities.</p>
                     </div>
                 </div>
             </div>
