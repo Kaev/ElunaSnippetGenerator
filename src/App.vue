@@ -119,7 +119,8 @@
             { name: "BG_EVENT_ON_CREATE", id: "3", args:  [ "event", "bg", "bgId", "instanceId" ], title: "Create" },
             { name: "BG_EVENT_ON_PRE_DESTROY", id: "4", args:  [ "event", "bg", "bgId", "instanceId" ], title: "Pre Destroy" },
         ],
-        registerHookName: "RegisterBGEvent"
+        registerHookName: "RegisterBGEvent",
+        hookExtraArgs: []
     },
     {
         category: "Creature",
@@ -153,7 +154,8 @@
             { name: "CREATURE_EVENT_ON_ADD", id: "36", args:  [ "event", "creature" ], title: "Add" },
             { name: "CREATURE_EVENT_ON_REMOVE", id: "37", args:  [ "event", "creature" ], title: "Remove" },
         ],
-        registerHookName: "RegisterCreatureEvent"
+        registerHookName: "RegisterCreatureEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "CreatureGossip",
@@ -161,7 +163,8 @@
             { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "creature" ], title: "Hello" },
             { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "creature", "sender", "intId", "code", "menuId" ], title: "Select" },
         ],
-        registerHookName: "RegisterCreatureGossipEvent"
+        registerHookName: "RegisterCreatureGossipEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "GameObject",
@@ -180,7 +183,8 @@
             { name: "GAMEOBJECT_EVENT_ON_REMOVE", id: "13", args:  [ "event", "gameObject" ], title: "Remove" },
             { name: "GAMEOBJECT_EVENT_ON_USE", id: "14", args:  [ "event", "gameObject", "player" ], title: "Use" },
         ],
-        registerHookName: "RegisterGameObjectEvent"
+        registerHookName: "RegisterGameObjectEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "GameObjectGossip",
@@ -188,7 +192,8 @@
             { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "gameObject" ], title: "Hello" },
             { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "gameObject", "sender", "intId", "code", "menuId" ], title: "Select" },
         ],
-        registerHookName: "RegisterGameObjectGossipEvent"
+        registerHookName: "RegisterGameObjectGossipEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "Group",
@@ -201,7 +206,8 @@
             { name: "GROUP_EVENT_ON_CREATE", id: "6", args:  [ "event", "group", "leaderGuid", "groupType" ], title: "Create", inWorldState: true },
             { name: "GROUP_EVENT_ON_MEMBER_ACCEPT", id: "7", args:  [ "event", "group", "player" ], title: "Member Accept", inWorldState: true },
         ],
-        registerHookName: "RegisterGroupEvent"
+        registerHookName: "RegisterGroupEvent",
+        hookExtraArgs: []
     },
     {
         category: "Guild",
@@ -218,7 +224,8 @@
             { name: "GUILD_EVENT_ON_EVENT", id: "10", args:  [ "event", "guild", "eventType", "playerGuidLow1", "playerGuidLow2", "newRank" ], title: "Event", inWorldState: true },
             { name: "GUILD_EVENT_ON_BANK_EVENT", id: "11", args:  [ "event", "guild", "eventType", "tabId", "playerGuidLow", "itemOrMoney", "itemStackCount", "destTabId" ], title: "Bank Event", inWorldState: true },
         ],
-        registerHookName: "RegisterGuildEvent"
+        registerHookName: "RegisterGuildEvent",
+        hookExtraArgs: []
     },
     {
         category: "Instance",
@@ -231,7 +238,8 @@
             { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instanceData", "map", "gameObject" ], title: "Gameobject Create" },
             { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instanceData", "map" ], title: "Check Encounter In Progress" },
         ],
-        registerHookName: "RegisterInstanceEvent"
+        registerHookName: "RegisterInstanceEvent",
+        hookExtraArgs: [ "instanceId" ]
     },
     {
         category: "Item",
@@ -243,7 +251,8 @@
             { name: "ITEM_EVENT_ON_REMOVE", id: "5", args:  [ "event", "player", "item" ], title: "Remove" },
             { name: "ITEM_EVENT_ON_ADD", id: "6", args:  [ "event", "player", "item" ], title: "Add" },
         ],
-        registerHookName: "RegisterItemEvent"
+        registerHookName: "RegisterItemEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "ItemGossip",
@@ -251,7 +260,8 @@
             { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "item" ], title: "Hello" },
             { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "item", "sender", "intId", "code", "menuId" ], title: "Select" },
         ],
-        registerHookName: "RegisterItemGossipEvent"
+        registerHookName: "RegisterItemGossipEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "Map",
@@ -264,7 +274,8 @@
             { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instanceData", "map", "gameObject" ], title: "Gameobject Create" },
             { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instanceData", "map" ], title: "Check Encounter In Progress" },
         ],
-        registerHookName: "RegisterMapEvent"
+        registerHookName: "RegisterMapEvent",
+        hookExtraArgs: [ "mapId" ]
     },
     {
         category: "Packet",
@@ -272,7 +283,8 @@
             { name: "PACKET_EVENT_ON_PACKET_RECEIVE", id: "5", args:  [ "event", "packet", "player" ], title: "Packet Receive", inWorldState: true },
             { name: "PACKET_EVENT_ON_PACKET_SEND", id: "7", args:  [ "event", "packet", "player" ], title: "Packet Send", inWorldState: true },
         ],
-        registerHookName: "RegisterPacketEvent"
+        registerHookName: "RegisterPacketEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "Player",
@@ -328,7 +340,8 @@
             { name: "PLAYER_EVENT_ON_SEND_MAIL", id: "49", args:  [ "event", "player", "recipientGuid" ], title: "Send Mail" },
             { name: "PLAYER_EVENT_ON_QUEST_STATUS_CHANGED", id: "54", args:  [ "event", "player", "questId", "status" ], title: "Quest Status Changed" },
         ],
-        registerHookName: "RegisterPlayerEvent"
+        registerHookName: "RegisterPlayerEvent",
+        hookExtraArgs: []
     },
     {
         category: "PlayerGossip",
@@ -336,7 +349,8 @@
             { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "object" ], title: "Hello" },
             { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "object", "sender", "intId", "code", "menuId" ], title: "Select" },
         ],
-        registerHookName: "RegisterPlayerGossipEvent"
+        registerHookName: "RegisterPlayerGossipEvent",
+        hookExtraArgs: [ "menuId" ]
     },
     {
         category: "Server",
@@ -369,14 +383,16 @@
             { name: "GAME_EVENT_START", id: "34", args:  [ "event", "gameEventId" ], title: "Game Event Start", inWorldState: true },
             { name: "GAME_EVENT_STOP", id: "35", args:  [ "event", "gameEventId" ], title: "Game Event Stop", inWorldState: true },
         ],
-        registerHookName: "RegisterServerEvent"
+        registerHookName: "RegisterServerEvent",
+        hookExtraArgs: []
     },
     {
         category: "Spell",
         events: [
             { name: "SPELL_EVENT_ON_CAST", id: "1", args:  [ "event", "spell", "skipCheck" ], title: "Cast" },
         ],
-        registerHookName: "RegisterSpellEvent"
+        registerHookName: "RegisterSpellEvent",
+        hookExtraArgs: [ "entry" ]
     },
     {
         category: "UniqueCreature",
@@ -411,7 +427,8 @@
             { name: "CREATURE_EVENT_ON_ADD", id: "36", args:  [ "event", "creature" ], title: "Add" },
             { name: "CREATURE_EVENT_ON_REMOVE", id: "37", args:  [ "event", "creature" ], title: "Remove" },
         ],
-        registerHookName: "RegisterUniqueCreatureEvent"
+        registerHookName: "RegisterUniqueCreatureEvent",
+        hookExtraArgs: [ "guid", "instanceId" ]
     }
     ]);
     const singleThreadedTemplate = `
@@ -432,7 +449,11 @@ end
 local {{identifier.name}} = {{identifier.id}};
 {{/each_}}
 {{@each(hook.registrations) => registration}}
+{{@if(registration.hookExtraArgs.length > 0)}}
+{{registration.registerHookName}}({{registration.hookExtraArgs}}, {{registration.name}}, {{registration.functionName}});
+{{#else}}
 {{registration.registerHookName}}({{registration.name}}, {{registration.functionName}});
+{{/if}}
 {{/each_}}
 {{@if(hook.registrations.length > 0)}}
 
@@ -485,7 +506,11 @@ if (GetStateMapId() == {{ it.mapId }} or IsCompatibilityMode()) then
     local {{identifier.name}} = {{identifier.id}};
 {{/each_}}
 {{@each(hook.mapStateRegistrations) => registration}}
+{{@if(registration.hookExtraArgs.length > 0)}}
+    {{registration.registerHookName}}({{registration.hookExtraArgs}}, {{registration.name}}, {{registration.functionName}});
+{{#else}}
     {{registration.registerHookName}}({{registration.name}}, {{registration.functionName}});
+{{/if}}
 {{/each_}}
 {{@if(hook.mapStateRegistrations.length > 0)}}
 {{/if}}
@@ -594,7 +619,8 @@ end
                     var registration = {
                         registerHookName: eventCategory.registerHookName,
                         name: event.name,
-                        functionName: functionName
+                        functionName: functionName,
+                        hookExtraArgs: eventCategory.hookExtraArgs.join(", ")
                     };
 
                     if (event.inWorldState === true) {
@@ -647,7 +673,8 @@ end
                     hook.registrations.push({
                         registerHookName: eventCategory.registerHookName,
                         name: event.name,
-                        functionName: functionName
+                        functionName: functionName,
+                        hookExtraArgs: eventCategory.hookExtraArgs.join(", ")
                     });
                 }
             });
