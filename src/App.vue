@@ -75,6 +75,10 @@
                             <input v-model="mapId" type="number" class="form-control" id="mapId" placeholder="1" @input="generateCode">
                             <label for="mapId">Map Id</label>
                         </div>
+                        <div class="form-check form-switch">
+                            <input v-model="generateLspDefinitions" class="form-check-input" type="checkbox" role="switch" id="generateLspDefinitions" @change="onGenerateLspDefinitionsChanged()">
+                            <label class="form-check-label" for="generateLspDefinitions">Generate Eluna LSP Definitions</label>
+                        </div>
 
                         <p class="card-text mt-2">Add your own user snippets on the <a href="https://github.com/Kaev/ElunaSnippetGenerator/">GitHub repository</a>.</p>
                         <p class="card-text">Made with <span style="color: red;">♡</span> by Kaev for the <a href="https://discord.gg/2FVqBGCkvk">WoW Modding</a> and <a href="https://discord.gg/h8jdsgGTg8">Eluna</a> communities.</p>
@@ -114,10 +118,10 @@
     {
         category: "Battleground",
         events: [
-            { name: "BG_EVENT_ON_START", id: "1", args:  [ "event", "bg", "bgId", "instanceId" ], title: "Start" },
-            { name: "BG_EVENT_ON_END", id: "2", args:  [ "event", "bg", "bgId", "instanceId", "winner" ], title: "End" },
-            { name: "BG_EVENT_ON_CREATE", id: "3", args:  [ "event", "bg", "bgId", "instanceId" ], title: "Create" },
-            { name: "BG_EVENT_ON_PRE_DESTROY", id: "4", args:  [ "event", "bg", "bgId", "instanceId" ], title: "Pre Destroy" },
+            { name: "BG_EVENT_ON_START", id: "1", args: [{ name: "event", type: "number" }, { name: "bg", type: "BattleGround" }, { name: "bgId", type: "number" }, { name: "instanceId", type: "number" }], title: "Start" },
+            { name: "BG_EVENT_ON_END", id: "2", args: [{ name: "event", type: "number" }, { name: "bg", type: "BattleGround" }, { name: "bgId", type: "number" }, { name: "instanceId", type: "number" }, { name: "winner", type: "number" }], title: "End" },
+            { name: "BG_EVENT_ON_CREATE", id: "3", args: [{ name: "event", type: "number" }, { name: "bg", type: "BattleGround" }, { name: "bgId", type: "number" }, { name: "instanceId", type: "number" }], title: "Create" },
+            { name: "BG_EVENT_ON_PRE_DESTROY", id: "4", args: [{ name: "event", type: "number" }, { name: "bg", type: "BattleGround" }, { name: "bgId", type: "number" }, { name: "instanceId", type: "number" }], title: "Pre Destroy" },
         ],
         registerHookName: "RegisterBGEvent",
         hookExtraArgs: []
@@ -125,34 +129,34 @@
     {
         category: "Creature",
         events: [
-            { name: "CREATURE_EVENT_ON_ENTER_COMBAT", id: "1", args:  [ "event", "creature", "target" ], title: "Enter Combat" },
-            { name: "CREATURE_EVENT_ON_LEAVE_COMBAT", id: "2", args:  [ "event", "creature" ], title: "Leave Combat" },
-            { name: "CREATURE_EVENT_ON_TARGET_DIED", id: "3", args:  [ "event", "creature", "victim" ], title: "Target Died" },
-            { name: "CREATURE_EVENT_ON_DIED", id: "4", args:  [ "event", "creature", "killer" ], title: "Died" },
-            { name: "CREATURE_EVENT_ON_SPAWN", id: "5", args:  [ "event", "creature" ], title: "Spawn" },
-            { name: "CREATURE_EVENT_ON_REACH_WP", id: "6", args:  [ "event", "creature", "type", "id" ], title: "Reach Waypoint" },
-            { name: "CREATURE_EVENT_ON_AIUPDATE", id: "7", args:  [ "event", "creature", "diff" ], title: "AI Update" },
-            { name: "CREATURE_EVENT_ON_RECEIVE_EMOTE", id: "8", args:  [ "event", "creature", "player", "emoteId" ], title: "Receive Emote" },
-            { name: "CREATURE_EVENT_ON_DAMAGE_TAKEN", id: "9", args:  [ "event", "creature", "attacker", "damage" ], title: "Damage Taken" },
-            { name: "CREATURE_EVENT_ON_PRE_COMBAT", id: "10", args:  [ "event", "creature", "target" ], title: "Pre Combat" },
-            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED", id: "12", args:  [ "event", "creature", "target" ], title: "Owner Attacked" },
-            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED_AT", id: "13", args:  [ "event", "creature", "attacker" ], title: "Owner Attacked At" },
-            { name: "CREATURE_EVENT_ON_HIT_BY_SPELL", id: "14", args:  [ "event", "creature", "caster", "spellId" ], title: "Hit By Spell" },
-            { name: "CREATURE_EVENT_ON_SPELL_HIT_TARGET", id: "15", args:  [ "event", "creature", "target", "spellId" ], title: "Spell Hit Target" },
-            { name: "CREATURE_EVENT_ON_JUST_SUMMONED_CREATURE", id: "19", args:  [ "event", "creature", "summon" ], title: "Just Summoned Creature" },
-            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DESPAWN", id: "20", args:  [ "event", "creature", "summon" ], title: "Summoned Creature Despawn" },
-            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DIED", id: "21", args:  [ "event", "creature", "summon", "killer" ], title: "Summoned Creature Died" },
-            { name: "CREATURE_EVENT_ON_SUMMONED", id: "22", args:  [ "event", "creature", "summoner" ], title: "Summoned" },
-            { name: "CREATURE_EVENT_ON_RESET", id: "23", args:  [ "event", "creature" ], title: "Reset" },
-            { name: "CREATURE_EVENT_ON_REACH_HOME", id: "24", args:  [ "event", "creature" ], title: "Reach Home" },
-            { name: "CREATURE_EVENT_ON_CORPSE_REMOVED", id: "26", args:  [ "event", "creature", "respawnDelay" ], title: "Corpse Removed" },
-            { name: "CREATURE_EVENT_ON_MOVE_IN_LOS", id: "27", args:  [ "event", "creature", "unit" ], title: "Move in LoS" },
-            { name: "CREATURE_EVENT_ON_DUMMY_EFFECT", id: "30", args:  [ "event", "caster", "spellId", "effIndex", "creature" ], title: "Dummy Effect" },
-            { name: "CREATURE_EVENT_ON_QUEST_ACCEPT", id: "31", args:  [ "event", "player", "creature", "quest" ], title: "Quest Accept" },
-            { name: "CREATURE_EVENT_ON_QUEST_REWARD", id: "34", args:  [ "event", "player", "creature", "quest", "opt" ], title: "Quest Reward" },
-            { name: "CREATURE_EVENT_ON_DIALOG_STATUS", id: "35", args:  [ "event", "player", "creature" ], title: "Dialog Status" },
-            { name: "CREATURE_EVENT_ON_ADD", id: "36", args:  [ "event", "creature" ], title: "Add" },
-            { name: "CREATURE_EVENT_ON_REMOVE", id: "37", args:  [ "event", "creature" ], title: "Remove" },
+            { name: "CREATURE_EVENT_ON_ENTER_COMBAT", id: "1", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "Unit" }], title: "Enter Combat" },
+            { name: "CREATURE_EVENT_ON_LEAVE_COMBAT", id: "2", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Leave Combat" },
+            { name: "CREATURE_EVENT_ON_TARGET_DIED", id: "3", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "victim", type: "Unit" }], title: "Target Died" },
+            { name: "CREATURE_EVENT_ON_DIED", id: "4", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "killer", type: "Unit" }], title: "Died" },
+            { name: "CREATURE_EVENT_ON_SPAWN", id: "5", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Spawn" },
+            { name: "CREATURE_EVENT_ON_REACH_WP", id: "6", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "type", type: "number" }, { name: "id", type: "number" }], title: "Reach Waypoint" },
+            { name: "CREATURE_EVENT_ON_AIUPDATE", id: "7", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "diff", type: "number" }], title: "AI Update" },
+            { name: "CREATURE_EVENT_ON_RECEIVE_EMOTE", id: "8", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "player", type: "Player" }, { name: "emoteId", type: "number" }], title: "Receive Emote" },
+            { name: "CREATURE_EVENT_ON_DAMAGE_TAKEN", id: "9", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "attacker", type: "Unit" }, { name: "damage", type: "number" }], title: "Damage Taken" },
+            { name: "CREATURE_EVENT_ON_PRE_COMBAT", id: "10", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "Unit" }], title: "Pre Combat" },
+            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED", id: "12", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "Unit" }], title: "Owner Attacked" },
+            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED_AT", id: "13", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "attacker", type: "Unit" }], title: "Owner Attacked At" },
+            { name: "CREATURE_EVENT_ON_HIT_BY_SPELL", id: "14", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "caster", type: "WorldObject" }, { name: "spellId", type: "number" }], title: "Hit By Spell" },
+            { name: "CREATURE_EVENT_ON_SPELL_HIT_TARGET", id: "15", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "WorldObject" }, { name: "spellId", type: "number" }], title: "Spell Hit Target" },
+            { name: "CREATURE_EVENT_ON_JUST_SUMMONED_CREATURE", id: "19", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summon", type: "Creature" }], title: "Just Summoned Creature" },
+            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DESPAWN", id: "20", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summon", type: "Creature" }], title: "Summoned Creature Despawn" },
+            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DIED", id: "21", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summon", type: "Creature" }, { name: "killer", type: "Unit" }], title: "Summoned Creature Died" },
+            { name: "CREATURE_EVENT_ON_SUMMONED", id: "22", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summoner", type: "Unit" }], title: "Summoned" },
+            { name: "CREATURE_EVENT_ON_RESET", id: "23", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Reset" },
+            { name: "CREATURE_EVENT_ON_REACH_HOME", id: "24", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Reach Home" },
+            { name: "CREATURE_EVENT_ON_CORPSE_REMOVED", id: "26", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "respawnDelay", type: "number" }], title: "Corpse Removed" },
+            { name: "CREATURE_EVENT_ON_MOVE_IN_LOS", id: "27", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "unit", type: "Unit" }], title: "Move in LoS" },
+            { name: "CREATURE_EVENT_ON_DUMMY_EFFECT", id: "30", args: [{ name: "event", type: "number" }, { name: "caster", type: "WorldObject" }, { name: "spellId", type: "number" }, { name: "effIndex", type: "number" }, { name: "creature", type: "Creature" }], title: "Dummy Effect" },
+            { name: "CREATURE_EVENT_ON_QUEST_ACCEPT", id: "31", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }, { name: "quest", type: "Quest" }], title: "Quest Accept" },
+            { name: "CREATURE_EVENT_ON_QUEST_REWARD", id: "34", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }, { name: "quest", type: "Quest" }, { name: "opt", type: "number" }], title: "Quest Reward" },
+            { name: "CREATURE_EVENT_ON_DIALOG_STATUS", id: "35", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }], title: "Dialog Status" },
+            { name: "CREATURE_EVENT_ON_ADD", id: "36", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Add" },
+            { name: "CREATURE_EVENT_ON_REMOVE", id: "37", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Remove" },
         ],
         registerHookName: "RegisterCreatureEvent",
         hookExtraArgs: [ "entry" ]
@@ -160,8 +164,8 @@
     {
         category: "CreatureGossip",
         events: [
-            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "creature" ], title: "Hello" },
-            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "creature", "sender", "intId", "code", "menuId" ], title: "Select" },
+            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }], title: "Hello" },
+            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }, { name: "sender", type: "number" }, { name: "intId", type: "number" }, { name: "code", type: "string" }, { name: "menuId", type: "number" }], title: "Select" },
         ],
         registerHookName: "RegisterCreatureGossipEvent",
         hookExtraArgs: [ "entry" ]
@@ -169,19 +173,19 @@
     {
         category: "GameObject",
         events: [
-            { name: "GAMEOBJECT_EVENT_ON_AIUPDATE", id: "1", args:  [ "event", "gameObject", "diff" ], title: "AI Update" },
-            { name: "GAMEOBJECT_EVENT_ON_SPAWN", id: "2", args:  [ "event", "gameObject" ], title: "Spawn" },
-            { name: "GAMEOBJECT_EVENT_ON_DUMMY_EFFECT", id: "3", args:  [ "event", "caster", "spellId", "effIndex", "gameObject" ], title: "Dummy Effect" },
-            { name: "GAMEOBJECT_EVENT_ON_QUEST_ACCEPT", id: "4", args:  [ "event", "player", "gameObject", "quest" ], title: "Quest Accept" },
-            { name: "GAMEOBJECT_EVENT_ON_QUEST_REWARD", id: "5", args:  [ "event", "player", "gameObject", "quest", "opt" ], title: "Quest Reward" },
-            { name: "GAMEOBJECT_EVENT_ON_DIALOG_STATUS", id: "6", args:  [ "event", "player", "gameObject" ], title: "Dialog Status" },
-            { name: "GAMEOBJECT_EVENT_ON_DESTROYED", id: "7", args:  [ "event", "gameObject", "player" ], title: "Destroyed" },
-            { name: "GAMEOBJECT_EVENT_ON_DAMAGED", id: "8", args:  [ "event", "gameObject", "player" ], title: "Damaged" },
-            { name: "GAMEOBJECT_EVENT_ON_LOOT_STATE_CHANGE", id: "9", args:  [ "event", "gameObject", "state" ], title: "Loot State Changed" },
-            { name: "GAMEOBJECT_EVENT_ON_GO_STATE_CHANGED", id: "10", args:  [ "event", "gameObject", "state" ], title: "Go State Changed" },
-            { name: "GAMEOBJECT_EVENT_ON_ADD", id: "12", args:  [ "event", "gameObject" ], title: "Add" },
-            { name: "GAMEOBJECT_EVENT_ON_REMOVE", id: "13", args:  [ "event", "gameObject" ], title: "Remove" },
-            { name: "GAMEOBJECT_EVENT_ON_USE", id: "14", args:  [ "event", "gameObject", "player" ], title: "Use" },
+            { name: "GAMEOBJECT_EVENT_ON_AIUPDATE", id: "1", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }, { name: "diff", type: "number" }], title: "AI Update" },
+            { name: "GAMEOBJECT_EVENT_ON_SPAWN", id: "2", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }], title: "Spawn" },
+            { name: "GAMEOBJECT_EVENT_ON_DUMMY_EFFECT", id: "3", args: [{ name: "event", type: "number" }, { name: "caster", type: "WorldObject" }, { name: "spellId", type: "number" }, { name: "effIndex", type: "number" }, { name: "gameObject", type: "GameObject" }], title: "Dummy Effect" },
+            { name: "GAMEOBJECT_EVENT_ON_QUEST_ACCEPT", id: "4", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "gameObject", type: "GameObject" }, { name: "quest", type: "Quest" }], title: "Quest Accept" },
+            { name: "GAMEOBJECT_EVENT_ON_QUEST_REWARD", id: "5", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "gameObject", type: "GameObject" }, { name: "quest", type: "Quest" }, { name: "opt", type: "number" }], title: "Quest Reward" },
+            { name: "GAMEOBJECT_EVENT_ON_DIALOG_STATUS", id: "6", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "gameObject", type: "GameObject" }], title: "Dialog Status" },
+            { name: "GAMEOBJECT_EVENT_ON_DESTROYED", id: "7", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }, { name: "player", type: "Player" }], title: "Destroyed" },
+            { name: "GAMEOBJECT_EVENT_ON_DAMAGED", id: "8", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }, { name: "player", type: "Player" }], title: "Damaged" },
+            { name: "GAMEOBJECT_EVENT_ON_LOOT_STATE_CHANGE", id: "9", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }, { name: "state", type: "number" }], title: "Loot State Changed" },
+            { name: "GAMEOBJECT_EVENT_ON_GO_STATE_CHANGED", id: "10", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }, { name: "state", type: "number" }], title: "Go State Changed" },
+            { name: "GAMEOBJECT_EVENT_ON_ADD", id: "12", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }], title: "Add" },
+            { name: "GAMEOBJECT_EVENT_ON_REMOVE", id: "13", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }], title: "Remove" },
+            { name: "GAMEOBJECT_EVENT_ON_USE", id: "14", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }, { name: "player", type: "Player" }], title: "Use" },
         ],
         registerHookName: "RegisterGameObjectEvent",
         hookExtraArgs: [ "entry" ]
@@ -189,8 +193,8 @@
     {
         category: "GameObjectGossip",
         events: [
-            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "gameObject" ], title: "Hello" },
-            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "gameObject", "sender", "intId", "code", "menuId" ], title: "Select" },
+            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "gameObject", type: "GameObject" }], title: "Hello" },
+            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "gameObject", type: "GameObject" }, { name: "sender", type: "number" }, { name: "intId", type: "number" }, { name: "code", type: "string" }, { name: "menuId", type: "number" }], title: "Select" },
         ],
         registerHookName: "RegisterGameObjectGossipEvent",
         hookExtraArgs: [ "entry" ]
@@ -198,13 +202,13 @@
     {
         category: "Group",
         events: [
-            { name: "GROUP_EVENT_ON_MEMBER_ADD", id: "1", args:  [ "event", "group", "guid" ], title: "Member Add", inWorldState: true },
-            { name: "GROUP_EVENT_ON_MEMBER_INVITE", id: "2", args:  [ "event", "group", "guid" ], title: "Member Invite", inWorldState: true },
-            { name: "GROUP_EVENT_ON_MEMBER_REMOVE", id: "3", args:  [ "event", "group", "guid", "method" ], title: "Member Remove", inWorldState: true },
-            { name: "GROUP_EVENT_ON_LEADER_CHANGE", id: "4", args:  [ "event", "group", "newLeaderGuid", "oldLeaderGuid" ], title: "Leader Change", inWorldState: true },
-            { name: "GROUP_EVENT_ON_DISBAND", id: "5", args:  [ "event", "group" ], title: "Disband", inWorldState: true },
-            { name: "GROUP_EVENT_ON_CREATE", id: "6", args:  [ "event", "group", "leaderGuid", "groupType" ], title: "Create", inWorldState: true },
-            { name: "GROUP_EVENT_ON_MEMBER_ACCEPT", id: "7", args:  [ "event", "group", "player" ], title: "Member Accept", inWorldState: true },
+            { name: "GROUP_EVENT_ON_MEMBER_ADD", id: "1", args: [{ name: "event", type: "number" }, { name: "group", type: "Group" }, { name: "guid", type: "number" }], title: "Member Add", inWorldState: true },
+            { name: "GROUP_EVENT_ON_MEMBER_INVITE", id: "2", args: [{ name: "event", type: "number" }, { name: "group", type: "Group" }, { name: "guid", type: "number" }], title: "Member Invite", inWorldState: true },
+            { name: "GROUP_EVENT_ON_MEMBER_REMOVE", id: "3", args: [{ name: "event", type: "number" }, { name: "group", type: "Group" }, { name: "guid", type: "number" }, { name: "method", type: "number" }], title: "Member Remove", inWorldState: true },
+            { name: "GROUP_EVENT_ON_LEADER_CHANGE", id: "4", args: [{ name: "event", type: "number" }, { name: "group", type: "Group" }, { name: "newLeaderGuid", type: "number" }, { name: "oldLeaderGuid", type: "number" }], title: "Leader Change", inWorldState: true },
+            { name: "GROUP_EVENT_ON_DISBAND", id: "5", args: [{ name: "event", type: "number" }, { name: "group", type: "Group" }], title: "Disband", inWorldState: true },
+            { name: "GROUP_EVENT_ON_CREATE", id: "6", args: [{ name: "event", type: "number" }, { name: "group", type: "Group" }, { name: "leaderGuid", type: "number" }, { name: "groupType", type: "number" }], title: "Create", inWorldState: true },
+            { name: "GROUP_EVENT_ON_MEMBER_ACCEPT", id: "7", args: [{ name: "event", type: "number" }, { name: "group", type: "Group" }, { name: "player", type: "Player" }], title: "Member Accept", inWorldState: true },
         ],
         registerHookName: "RegisterGroupEvent",
         hookExtraArgs: []
@@ -212,17 +216,17 @@
     {
         category: "Guild",
         events: [
-            { name: "GUILD_EVENT_ON_ADD_MEMBER", id: "1", args:  [ "event", "guild", "player", "rank" ], title: "Add Member", inWorldState: true },
-            { name: "GUILD_EVENT_ON_REMOVE_MEMBER", id: "2", args:  [ "event", "guild", "player", "isDisbanding" ], title: "Remove Member", inWorldState: true },
-            { name: "GUILD_EVENT_ON_MOTD_CHANGE", id: "3", args:  [ "event", "guild", "newMOTD" ], title: "MOTD Change", inWorldState: true },
-            { name: "GUILD_EVENT_ON_INFO_CHANGE", id: "4", args:  [ "event", "guild", "newInfo" ], title: "Info Change", inWorldState: true },
-            { name: "GUILD_EVENT_ON_CREATE", id: "5", args:  [ "event", "guild", "leader", "name" ], title: "Create", inWorldState: true },
-            { name: "GUILD_EVENT_ON_DISBAND", id: "6", args:  [ "event", "guild" ], title: "Disband", inWorldState: true },
-            { name: "GUILD_EVENT_ON_MONEY_WITHDRAW", id: "7", args:  [ "event", "guild", "player", "amount", "isRepair" ], title: "Money Withdraw", inWorldState: true },
-            { name: "GUILD_EVENT_ON_MONEY_DEPOSIT", id: "8", args:  [ "event", "guild", "player", "amount" ], title: "Money Deposit", inWorldState: true },
-            { name: "GUILD_EVENT_ON_ITEM_MOVE", id: "9", args:  [ "event", "guild", "player", "item", "isSrcBank", "srcContainer", "srcSlotId", "isDestBank", "destContainer", "destSlotId" ], title: "Item Move", inWorldState: true },
-            { name: "GUILD_EVENT_ON_EVENT", id: "10", args:  [ "event", "guild", "eventType", "playerGuidLow1", "playerGuidLow2", "newRank" ], title: "Event", inWorldState: true },
-            { name: "GUILD_EVENT_ON_BANK_EVENT", id: "11", args:  [ "event", "guild", "eventType", "tabId", "playerGuidLow", "itemOrMoney", "itemStackCount", "destTabId" ], title: "Bank Event", inWorldState: true },
+            { name: "GUILD_EVENT_ON_ADD_MEMBER", id: "1", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "player", type: "Player" }, { name: "rank", type: "number" }], title: "Add Member", inWorldState: true },
+            { name: "GUILD_EVENT_ON_REMOVE_MEMBER", id: "2", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "player", type: "Player" }, { name: "isDisbanding", type: "boolean" }], title: "Remove Member", inWorldState: true },
+            { name: "GUILD_EVENT_ON_MOTD_CHANGE", id: "3", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "newMOTD", type: "string" }], title: "MOTD Change", inWorldState: true },
+            { name: "GUILD_EVENT_ON_INFO_CHANGE", id: "4", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "newInfo", type: "string" }], title: "Info Change", inWorldState: true },
+            { name: "GUILD_EVENT_ON_CREATE", id: "5", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "leader", type: "Player" }, { name: "name", type: "string" }], title: "Create", inWorldState: true },
+            { name: "GUILD_EVENT_ON_DISBAND", id: "6", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }], title: "Disband", inWorldState: true },
+            { name: "GUILD_EVENT_ON_MONEY_WITHDRAW", id: "7", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "player", type: "Player" }, { name: "amount", type: "number" }, { name: "isRepair", type: "boolean" }], title: "Money Withdraw", inWorldState: true },
+            { name: "GUILD_EVENT_ON_MONEY_DEPOSIT", id: "8", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "player", type: "Player" }, { name: "amount", type: "number" }], title: "Money Deposit", inWorldState: true },
+            { name: "GUILD_EVENT_ON_ITEM_MOVE", id: "9", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "isSrcBank", type: "boolean" }, { name: "srcContainer", type: "number" }, { name: "srcSlotId", type: "number" }, { name: "isDestBank", type: "boolean" }, { name: "destContainer", type: "number" }, { name: "destSlotId", type: "number" }], title: "Item Move", inWorldState: true },
+            { name: "GUILD_EVENT_ON_EVENT", id: "10", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "eventType", type: "number" }, { name: "playerGuidLow1", type: "number" }, { name: "playerGuidLow2", type: "number" }, { name: "newRank", type: "number" }], title: "Event", inWorldState: true },
+            { name: "GUILD_EVENT_ON_BANK_EVENT", id: "11", args: [{ name: "event", type: "number" }, { name: "guild", type: "Guild" }, { name: "eventType", type: "number" }, { name: "tabId", type: "number" }, { name: "playerGuidLow", type: "number" }, { name: "itemOrMoney", type: "number" }, { name: "itemStackCount", type: "number" }, { name: "destTabId", type: "number" }], title: "Bank Event", inWorldState: true },
         ],
         registerHookName: "RegisterGuildEvent",
         hookExtraArgs: []
@@ -230,13 +234,13 @@
     {
         category: "Instance",
         events: [
-            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args:  [ "event", "instanceData", "map" ], title: "Initialize" },
-            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args:  [ "event", "instanceData", "map" ], title: "Load" },
-            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args:  [ "event", "instanceData", "map", "diff" ], title: "Update" },
-            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args:  [ "event", "instanceData", "map", "player" ], title: "Player Enter" },
-            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args:  [ "event", "instanceData", "map", "creature" ], title: "Creature Create" },
-            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instanceData", "map", "gameObject" ], title: "Gameobject Create" },
-            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instanceData", "map" ], title: "Check Encounter In Progress" },
+            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }], title: "Initialize" },
+            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }], title: "Load" },
+            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "diff", type: "number" }], title: "Update" },
+            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "player", type: "Player" }], title: "Player Enter" },
+            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "creature", type: "Creature" }], title: "Creature Create" },
+            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "gameObject", type: "GameObject" }], title: "Gameobject Create" },
+            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }], title: "Check Encounter In Progress" },
         ],
         registerHookName: "RegisterInstanceEvent",
         hookExtraArgs: [ "instanceId" ]
@@ -244,12 +248,12 @@
     {
         category: "Item",
         events: [
-            { name: "ITEM_EVENT_ON_DUMMY_EFFECT", id: "1", args:  [ "event", "caster", "spellId", "effIndex", "item" ], title: "Dummy Effect" },
-            { name: "ITEM_EVENT_ON_USE", id: "2", args:  [ "event", "player", "item", "target" ], title: "Use" },
-            { name: "ITEM_EVENT_ON_QUEST_ACCEPT", id: "3", args:  [ "event", "player", "item", "quest" ], title: "Quest Accept" },
-            { name: "ITEM_EVENT_ON_EXPIRE", id: "4", args:  [ "event", "player", "itemId" ], title: "Expire" },
-            { name: "ITEM_EVENT_ON_REMOVE", id: "5", args:  [ "event", "player", "item" ], title: "Remove" },
-            { name: "ITEM_EVENT_ON_ADD", id: "6", args:  [ "event", "player", "item" ], title: "Add" },
+            { name: "ITEM_EVENT_ON_DUMMY_EFFECT", id: "1", args: [{ name: "event", type: "number" }, { name: "caster", type: "WorldObject" }, { name: "spellId", type: "number" }, { name: "effIndex", type: "number" }, { name: "item", type: "Item" }], title: "Dummy Effect" },
+            { name: "ITEM_EVENT_ON_USE", id: "2", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "target", type: "Unit" }], title: "Use" },
+            { name: "ITEM_EVENT_ON_QUEST_ACCEPT", id: "3", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "quest", type: "Quest" }], title: "Quest Accept" },
+            { name: "ITEM_EVENT_ON_EXPIRE", id: "4", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "itemId", type: "number" }], title: "Expire" },
+            { name: "ITEM_EVENT_ON_REMOVE", id: "5", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }], title: "Remove" },
+            { name: "ITEM_EVENT_ON_ADD", id: "6", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }], title: "Add" },
         ],
         registerHookName: "RegisterItemEvent",
         hookExtraArgs: [ "entry" ]
@@ -257,8 +261,8 @@
     {
         category: "ItemGossip",
         events: [
-            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "item" ], title: "Hello" },
-            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "item", "sender", "intId", "code", "menuId" ], title: "Select" },
+            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }], title: "Hello" },
+            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "sender", type: "number" }, { name: "intId", type: "number" }, { name: "code", type: "string" }, { name: "menuId", type: "number" }], title: "Select" },
         ],
         registerHookName: "RegisterItemGossipEvent",
         hookExtraArgs: [ "entry" ]
@@ -266,13 +270,13 @@
     {
         category: "Map",
         events: [
-            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args:  [ "event", "instanceData", "map" ], title: "Initialize" },
-            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args:  [ "event", "instanceData", "map" ], title: "Load" },
-            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args:  [ "event", "instanceData", "map", "diff" ], title: "Update" },
-            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args:  [ "event", "instanceData", "map", "player" ], title: "Player Enter" },
-            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args:  [ "event", "instanceData", "map", "creature" ], title: "Creature Create" },
-            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args:  [ "event", "instanceData", "map", "gameObject" ], title: "Gameobject Create" },
-            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args:  [ "event", "instanceData", "map" ], title: "Check Encounter In Progress" },
+            { name: "INSTANCE_EVENT_ON_INITIALIZE", id: "1", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }], title: "Initialize" },
+            { name: "INSTANCE_EVENT_ON_LOAD", id: "2", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }], title: "Load" },
+            { name: "INSTANCE_EVENT_ON_UPDATE", id: "3", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "diff", type: "number" }], title: "Update" },
+            { name: "INSTANCE_EVENT_ON_PLAYER_ENTER", id: "4", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "player", type: "Player" }], title: "Player Enter" },
+            { name: "INSTANCE_EVENT_ON_CREATURE_CREATE", id: "5", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "creature", type: "Creature" }], title: "Creature Create" },
+            { name: "INSTANCE_EVENT_ON_GAMEOBJECT_CREATE", id: "6", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }, { name: "gameObject", type: "GameObject" }], title: "Gameobject Create" },
+            { name: "INSTANCE_EVENT_ON_CHECK_ENCOUNTER_IN_PROGRESS", id: "7", args: [{ name: "event", type: "number" }, { name: "instanceData", type: "table" }, { name: "map", type: "Map" }], title: "Check Encounter In Progress" },
         ],
         registerHookName: "RegisterMapEvent",
         hookExtraArgs: [ "mapId" ]
@@ -280,8 +284,8 @@
     {
         category: "Packet",
         events: [
-            { name: "PACKET_EVENT_ON_PACKET_RECEIVE", id: "5", args:  [ "event", "packet", "player" ], title: "Packet Receive", inWorldState: true },
-            { name: "PACKET_EVENT_ON_PACKET_SEND", id: "7", args:  [ "event", "packet", "player" ], title: "Packet Send", inWorldState: true },
+            { name: "PACKET_EVENT_ON_PACKET_RECEIVE", id: "5", args: [{ name: "event", type: "number" }, { name: "packet", type: "WorldPacket" }, { name: "player", type: "Player" }], title: "Packet Receive", inWorldState: true },
+            { name: "PACKET_EVENT_ON_PACKET_SEND", id: "7", args: [{ name: "event", type: "number" }, { name: "packet", type: "WorldPacket" }, { name: "player", type: "Player" }], title: "Packet Send", inWorldState: true },
         ],
         registerHookName: "RegisterPacketEvent",
         hookExtraArgs: [ "entry" ]
@@ -289,56 +293,56 @@
     {
         category: "Player",
         events: [
-            { name: "PLAYER_EVENT_ON_CHARACTER_CREATE", id: "1", args:  [ "event", "player" ], title: "Character Create", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_CHARACTER_DELETE", id: "2", args:  [ "event", "guid" ], title: "Character Delete", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_LOGIN", id: "3", args:  [ "event", "player" ], title: "Login", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_LOGOUT", id: "4", args:  [ "event", "player" ], title: "Logout", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_SPELL_CAST", id: "5", args:  [ "event", "player", "spell", "skipCheck" ], title: "Spell Cast" },
-            { name: "PLAYER_EVENT_ON_KILL_PLAYER", id: "6", args:  [ "event", "killer", "killed" ], title: "Kill Player" },
-            { name: "PLAYER_EVENT_ON_KILL_CREATURE", id: "7", args:  [ "event", "killer", "killed" ], title: "Kill Creature" },
-            { name: "PLAYER_EVENT_ON_KILLED_BY_CREATURE", id: "8", args:  [ "event", "killer", "killed" ], title: "Killed By Creature" },
-            { name: "PLAYER_EVENT_ON_DUEL_REQUEST", id: "9", args:  [ "event", "target", "challenger" ], title: "Duel Request" },
-            { name: "PLAYER_EVENT_ON_DUEL_START", id: "10", args:  [ "event", "player1", "player2" ], title: "Duel Start" },
-            { name: "PLAYER_EVENT_ON_DUEL_END", id: "11", args:  [ "event", "winner", "loser", "type" ], title: "Duel End" },
-            { name: "PLAYER_EVENT_ON_GIVE_XP", id: "12", args:  [ "event", "player", "amount", "victim" ], title: "Give XP" },
-            { name: "PLAYER_EVENT_ON_LEVEL_CHANGE", id: "13", args:  [ "event", "player", "oldLevel" ], title: "Level Change" },
-            { name: "PLAYER_EVENT_ON_MONEY_CHANGE", id: "14", args:  [ "event", "player", "amount" ], title: "Money Change" },
-            { name: "PLAYER_EVENT_ON_REPUTATION_CHANGE", id: "15", args:  [ "event", "player", "factionId", "standing", "incremental" ], title: "Reputation Change" },
-            { name: "PLAYER_EVENT_ON_TALENTS_CHANGE", id: "16", args:  [ "event", "player", "points" ], title: "Talents Change" },
-            { name: "PLAYER_EVENT_ON_TALENTS_RESET", id: "17", args:  [ "event", "player", "noCost" ], title: "Talents Reset" },
-            { name: "PLAYER_EVENT_ON_CHAT", id: "18", args:  [ "event", "player", "msg", "type", "lang" ], title: "Chat", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_WHISPER", id: "19", args:  [ "event", "player", "msg", "type", "lang", "receiver" ], title: "Whisper", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_GROUP_CHAT", id: "20", args:  [ "event", "player", "msg", "type", "lang", "group" ], title: "Group Chat", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_GUILD_CHAT", id: "21", args:  [ "event", "player", "msg", "type", "lang", "guild" ], title: "Guild Chat", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_CHANNEL_CHAT", id: "22", args:  [ "event", "player", "msg", "type", "lang", "channelId" ], title: "Channel Chat", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_EMOTE", id: "23", args:  [ "event", "player", "emote" ], title: "Emote" },
-            { name: "PLAYER_EVENT_ON_TEXT_EMOTE", id: "24", args:  [ "event", "player", "textEmote", "emoteNum", "guid" ], title: "Text Emote" },
-            { name: "PLAYER_EVENT_ON_SAVE", id: "25", args:  [ "event", "player" ], title: "Save" },
-            { name: "PLAYER_EVENT_ON_BIND_TO_INSTANCE", id: "26", args:  [ "event", "player", "difficulty", "mapId", "permanent" ], title: "Bind To Instance" },
-            { name: "PLAYER_EVENT_ON_UPDATE_ZONE", id: "27", args:  [ "event", "player", "newZone", "newArea" ], title: "Update Zone" },
-            { name: "PLAYER_EVENT_ON_MAP_CHANGE", id: "28", args:  [ "event", "player" ], title: "Map Change" },
-            { name: "PLAYER_EVENT_ON_EQUIP", id: "29", args:  [ "event", "player", "item", "bag", "slot" ], title: "Equip" },
-            { name: "PLAYER_EVENT_ON_FIRST_LOGIN", id: "30", args:  [ "event", "player" ], title: "First Login", inWorldState: true },
-            { name: "PLAYER_EVENT_ON_CAN_USE_ITEM", id: "31", args:  [ "event", "player", "itemId" ], title: "Can Use Item" },
-            { name: "PLAYER_EVENT_ON_LOOT_ITEM", id: "32", args:  [ "event", "player", "item", "count" ], title: "Loot Item" },
-            { name: "PLAYER_EVENT_ON_ENTER_COMBAT", id: "33", args:  [ "event", "player", "enemy" ], title: "Enter Combat" },
-            { name: "PLAYER_EVENT_ON_LEAVE_COMBAT", id: "34", args:  [ "event", "player" ], title: "Leave Combat" },
-            { name: "PLAYER_EVENT_ON_REPOP", id: "35", args:  [ "event", "player" ], title: "Repop" },
-            { name: "PLAYER_EVENT_ON_RESURRECT", id: "36", args:  [ "event", "player" ], title: "Resurrect" },
-            { name: "PLAYER_EVENT_ON_LOOT_MONEY", id: "37", args:  [ "event", "player", "amount" ], title: "Loot Money" },
-            { name: "PLAYER_EVENT_ON_QUEST_ABANDON", id: "38", args:  [ "event", "player", "questId" ], title: "Quest Abandon" },
-            { name: "PLAYER_EVENT_ON_LEARN_TALENTS", id: "39", args:  [ "event", "player", "talentId", "talentRank", "spellId" ], title: "Learn Talents" },
-            { name: "PLAYER_EVENT_ON_ENVIRONMENTAL_DEATH", id: "40", args:  [ "event", "player", "environmentalDamageType" ], title: "Environmental Death" },
-            { name: "PLAYER_EVENT_ON_TRADE_ACCEPT", id: "41", args:  [ "event", "player", "target" ], title: "Trade Accept" },
-            { name: "PLAYER_EVENT_ON_COMMAND", id: "42", args:  [ "event", "player", "command" ], title: "Command" },
-            { name: "PLAYER_EVENT_ON_SKILL_CHANGE", id: "43", args:  [ "event", "player", "skillId", "skillValue" ], title: "Skill Change" },
-            { name: "PLAYER_EVENT_ON_LEARN_SPELL", id: "44", args:  [ "event", "player", "spellId" ], title: "Learn Spell" },
-            { name: "PLAYER_EVENT_ON_ACHIEVEMENT_COMPLETE", id: "45", args:  [ "event", "player", "achievementId" ], title: "Achievement Complete" },
-            { name: "PLAYER_EVENT_ON_DISCOVER_AREA", id: "46", args:  [ "event", "player", "area" ], title: "Discover Area" },
-            { name: "PLAYER_EVENT_ON_UPDATE_AREA", id: "47", args:  [ "event", "player", "oldArea", "newArea" ], title: "Update Area" },
-            { name: "PLAYER_EVENT_ON_TRADE_INIT", id: "48", args:  [ "event", "player", "target" ], title: "Trade Init" },
-            { name: "PLAYER_EVENT_ON_SEND_MAIL", id: "49", args:  [ "event", "player", "recipientGuid" ], title: "Send Mail" },
-            { name: "PLAYER_EVENT_ON_QUEST_STATUS_CHANGED", id: "54", args:  [ "event", "player", "questId", "status" ], title: "Quest Status Changed" },
+            { name: "PLAYER_EVENT_ON_CHARACTER_CREATE", id: "1", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Character Create", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_CHARACTER_DELETE", id: "2", args:[{ name: "event", type: "number" }, { name: "guid", type: "number" }], title: "Character Delete", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_LOGIN", id: "3", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Login", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_LOGOUT", id: "4", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Logout", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_SPELL_CAST", id: "5", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "spell", type: "Spell" }, { name: "skipCheck", type: "boolean" }], title: "Spell Cast" },
+            { name: "PLAYER_EVENT_ON_KILL_PLAYER", id: "6", args: [{ name: "event", type: "number" }, { name: "killer", type: "Player" }, { name: "killed", type: "Player" }], title: "Kill Player" },
+            { name: "PLAYER_EVENT_ON_KILL_CREATURE", id: "7", args: [{ name: "event", type: "number" }, { name: "killer", type: "Player" }, { name: "killed", type: "Creature" }], title: "Kill Creature" },
+            { name: "PLAYER_EVENT_ON_KILLED_BY_CREATURE", id: "8", args: [{ name: "event", type: "number" }, { name: "killer", type: "Creature" }, { name: "killed", type: "Player" }], title: "Killed By Creature" },
+            { name: "PLAYER_EVENT_ON_DUEL_REQUEST", id: "9", args: [{ name: "event", type: "number" }, { name: "target", type: "Player" }, { name: "challenger", type: "Player" }], title: "Duel Request" },
+            { name: "PLAYER_EVENT_ON_DUEL_START", id: "10", args: [{ name: "event", type: "number" }, { name: "player1", type: "Player" }, { name: "player2", type: "Player" }], title: "Duel Start" },
+            { name: "PLAYER_EVENT_ON_DUEL_END", id: "11", args: [{ name: "event", type: "number" }, { name: "winner", type: "number" }, { name: "loser", type: "Player" }, { name: "type", type: "number" }], title: "Duel End" },
+            { name: "PLAYER_EVENT_ON_GIVE_XP", id: "12", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "amount", type: "number" }, { name: "victim", type: "Unit" }], title: "Give XP" },
+            { name: "PLAYER_EVENT_ON_LEVEL_CHANGE", id: "13", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "oldLevel", type: "number" }], title: "Level Change" },
+            { name: "PLAYER_EVENT_ON_MONEY_CHANGE", id: "14", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "amount", type: "number" }], title: "Money Change" },
+            { name: "PLAYER_EVENT_ON_REPUTATION_CHANGE", id: "15", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "factionId", type: "number" }, { name: "standing", type: "number" }, { name: "incremental", type: "boolean" }], title: "Reputation Change" },
+            { name: "PLAYER_EVENT_ON_TALENTS_CHANGE", id: "16", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "points", type: "number" }], title: "Talents Change" },
+            { name: "PLAYER_EVENT_ON_TALENTS_RESET", id: "17", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "noCost", type: "boolean" }], title: "Talents Reset" },
+            { name: "PLAYER_EVENT_ON_CHAT", id: "18", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "msg", type: "string" }, { name: "type", type: "number" }, { name: "lang", type: "number" }], title: "Chat", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_WHISPER", id: "19", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "msg", type: "string" }, { name: "type", type: "number" }, { name: "lang", type: "number" }, { name: "receiver", type: "Player" }], title: "Whisper", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_GROUP_CHAT", id: "20", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "msg", type: "string" }, { name: "type", type: "number" }, { name: "lang", type: "number" }, { name: "group", type: "Group" }], title: "Group Chat", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_GUILD_CHAT", id: "21", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "msg", type: "string" }, { name: "type", type: "number" }, { name: "lang", type: "number" }, { name: "guild", type: "Guild" }], title: "Guild Chat", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_CHANNEL_CHAT", id: "22", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "msg", type: "string" }, { name: "type", type: "number" }, { name: "lang", type: "number" }, { name: "channelId", type: "number" }], title: "Channel Chat", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_EMOTE", id: "23", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "emote", type: "number" }], title: "Emote" },
+            { name: "PLAYER_EVENT_ON_TEXT_EMOTE", id: "24", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "textEmote", type: "number" }, { name: "emoteNum", type: "number" }, { name: "guid", type: "number" }], title: "Text Emote" },
+            { name: "PLAYER_EVENT_ON_SAVE", id: "25", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Save" },
+            { name: "PLAYER_EVENT_ON_BIND_TO_INSTANCE", id: "26", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "difficulty", type: "number" }, { name: "mapId", type: "number" }, { name: "permanent", type: "boolean" }], title: "Bind To Instance" },
+            { name: "PLAYER_EVENT_ON_UPDATE_ZONE", id: "27", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "newZone", type: "number" }, { name: "newArea", type: "number" }], title: "Update Zone" },
+            { name: "PLAYER_EVENT_ON_MAP_CHANGE", id: "28", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Map Change" },
+            { name: "PLAYER_EVENT_ON_EQUIP", id: "29", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "bag", type: "number" }, { name: "slot", type: "number" }], title: "Equip" },
+            { name: "PLAYER_EVENT_ON_FIRST_LOGIN", id: "30", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "First Login", inWorldState: true },
+            { name: "PLAYER_EVENT_ON_CAN_USE_ITEM", id: "31", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "itemId", type: "number" }], title: "Can Use Item" },
+            { name: "PLAYER_EVENT_ON_LOOT_ITEM", id: "32", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "count", type: "number" }], title: "Loot Item" },
+            { name: "PLAYER_EVENT_ON_ENTER_COMBAT", id: "33", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "enemy", type: "Unit" }], title: "Enter Combat" },
+            { name: "PLAYER_EVENT_ON_LEAVE_COMBAT", id: "34", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Leave Combat" },
+            { name: "PLAYER_EVENT_ON_REPOP", id: "35", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Repop" },
+            { name: "PLAYER_EVENT_ON_RESURRECT", id: "36", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }], title: "Resurrect" },
+            { name: "PLAYER_EVENT_ON_LOOT_MONEY", id: "37", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "amount", type: "number" }], title: "Loot Money" },
+            { name: "PLAYER_EVENT_ON_QUEST_ABANDON", id: "38", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "questId", type: "number" }], title: "Quest Abandon" },
+            { name: "PLAYER_EVENT_ON_LEARN_TALENTS", id: "39", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "talentId", type: "number" }, { name: "talentRank", type: "number" }, { name: "spellId", type: "number" }], title: "Learn Talents" },
+            { name: "PLAYER_EVENT_ON_ENVIRONMENTAL_DEATH", id: "40", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "environmentalDamageType", type: "number" }], title: "Environmental Death" },
+            { name: "PLAYER_EVENT_ON_TRADE_ACCEPT", id: "41", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "target", type: "Player" }], title: "Trade Accept" },
+            { name: "PLAYER_EVENT_ON_COMMAND", id: "42", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "command", type: "string" }], title: "Command" },
+            { name: "PLAYER_EVENT_ON_SKILL_CHANGE", id: "43", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "skillId", type: "number" }, { name: "skillValue", type: "number" }], title: "Skill Change" },
+            { name: "PLAYER_EVENT_ON_LEARN_SPELL", id: "44", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "spellId", type: "number" }], title: "Learn Spell" },
+            { name: "PLAYER_EVENT_ON_ACHIEVEMENT_COMPLETE", id: "45", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "achievementId", type: "number" }], title: "Achievement Complete" },
+            { name: "PLAYER_EVENT_ON_DISCOVER_AREA", id: "46", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "area", type: "number" }], title: "Discover Area" },
+            { name: "PLAYER_EVENT_ON_UPDATE_AREA", id: "47", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "oldArea", type: "number" }, { name: "newArea", type: "number" }], title: "Update Area" },
+            { name: "PLAYER_EVENT_ON_TRADE_INIT", id: "48", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "target", type: "Player" }], title: "Trade Init" },
+            { name: "PLAYER_EVENT_ON_SEND_MAIL", id: "49", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "recipientGuid", type: "number" }], title: "Send Mail" },
+            { name: "PLAYER_EVENT_ON_QUEST_STATUS_CHANGED", id: "54", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "questId", type: "number" }, { name: "status", type: "number" }], title: "Quest Status Changed" },
         ],
         registerHookName: "RegisterPlayerEvent",
         hookExtraArgs: []
@@ -346,8 +350,8 @@
     {
         category: "PlayerGossip",
         events: [
-            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args:  [ "event", "player", "object" ], title: "Hello" },
-            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args:  [ "event", "player", "object", "sender", "intId", "code", "menuId" ], title: "Select" },
+            { name: "GOSSIP_EVENT_ON_HELLO", id: "1", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "object", type: "GameObject" }], title: "Hello" },
+            { name: "GOSSIP_EVENT_ON_SELECT", id: "2", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "object", type: "GameObject" }, { name: "sender", type: "number" }, { name: "intId", type: "number" }, { name: "code", type: "string" }, { name: "menuId", type: "number" }], title: "Select" },
         ],
         registerHookName: "RegisterPlayerGossipEvent",
         hookExtraArgs: [ "menuId" ]
@@ -355,33 +359,33 @@
     {
         category: "Server",
         events: [
-            { name: "SERVER_EVENT_ON_PACKET_RECEIVE", id: "5", args:  [ "event", "packet", "player" ], title: "Server Packet Receive", inWorldState: true },
-            { name: "SERVER_EVENT_ON_PACKET_SEND", id: "7", args:  [ "event", "packet", "player" ], title: "Server Packet Send", inWorldState: true },
-            { name: "WORLD_EVENT_ON_OPEN_STATE_CHANGE", id: "8", args:  [ "event", "open" ], title: "Open State Change", inWorldState: true },
-            { name: "WORLD_EVENT_ON_CONFIG_LOAD", id: "9", args:  [ "event", "reload" ], title: "Config Load", inWorldState: true },
-            { name: "WORLD_EVENT_ON_SHUTDOWN_INIT", id: "11", args:  [ "event", "code", "mask" ], title: "Shutdown Init", inWorldState: true },
-            { name: "WORLD_EVENT_ON_SHUTDOWN_CANCEL", id: "12", args:  [ "event" ], title: "Shutdown Cancel", inWorldState: true },
-            { name: "WORLD_EVENT_ON_UPDATE", id: "13", args:  [ "event", "diff" ], title: "Update", inWorldState: true },
-            { name: "WORLD_EVENT_ON_STARTUP", id: "14", args:  [ "event" ], title: "Startup", inWorldState: true },
-            { name: "WORLD_EVENT_ON_SHUTDOWN", id: "15", args:  [ "event" ], title: "Shutdown", inWorldState: true },
-            { name: "ELUNA_EVENT_ON_LUA_STATE_CLOSE", id: "16", args:  [ "event" ], title: "Lua State Close", inWorldState: true },
-            { name: "MAP_EVENT_ON_CREATE", id: "17", args:  [ "event", "map" ], title: "Map Create" },
-            { name: "MAP_EVENT_ON_DESTROY", id: "18", args:  [ "event", "map" ], title: "Map Destroy" },
-            { name: "MAP_EVENT_ON_PLAYER_ENTER", id: "21", args:  [ "event", "map", "player" ], title: "Map Player Enter" },
-            { name: "MAP_EVENT_ON_PLAYER_LEAVE", id: "22", args:  [ "event", "map", "player" ], title: "Map Player Leave" },
-            { name: "MAP_EVENT_ON_UPDATE", id: "23", args:  [ "event", "map", "diff" ], title: "Map Update" },
-            { name: "TRIGGER_EVENT_ON_TRIGGER", id: "24", args:  [ "event", "player", "triggerId" ], title: "Trigger" },
-            { name: "WEATHER_EVENT_ON_CHANGE", id: "25", args:  [ "event", "zoneId", "state", "grade" ], title: "Weather Change", inWorldState: true },
-            { name: "AUCTION_EVENT_ON_ADD", id: "26", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Add", inWorldState: true },
-            { name: "AUCTION_EVENT_ON_REMOVE", id: "27", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Remove", inWorldState: true },
-            { name: "AUCTION_EVENT_ON_SUCCESSFUL", id: "28", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Successful", inWorldState: true },
-            { name: "AUCTION_EVENT_ON_EXPIRE", id: "29", args:  [ "event", "auctionId", "owner", "item", "expireTime", "buyout", "startBid", "currentBid", "bidderGuidLow" ], title: "Auction Expire", inWorldState: true },
-            { name: "ADDON_EVENT_ON_MESSAGE", id: "30", args:  [ "event", "sender", "type", "prefix", "msg", "target" ], title: "Addon Message", inWorldState: true },
-            { name: "WORLD_EVENT_ON_DELETE_CREATURE", id: "31", args:  [ "event", "creature" ], title: "Delete Creature", inWorldState: true },
-            { name: "WORLD_EVENT_ON_DELETE_GAMEOBJECT", id: "32", args:  [ "event", "gameObject" ], title: "Delete Gameobject", inWorldState: true },
-            { name: "ELUNA_EVENT_ON_LUA_STATE_OPEN", id: "33", args:  [ "event" ], title: "Lua State Open", inWorldState: true },
-            { name: "GAME_EVENT_START", id: "34", args:  [ "event", "gameEventId" ], title: "Game Event Start", inWorldState: true },
-            { name: "GAME_EVENT_STOP", id: "35", args:  [ "event", "gameEventId" ], title: "Game Event Stop", inWorldState: true },
+            { name: "SERVER_EVENT_ON_PACKET_RECEIVE", id: "5", args: [{ name: "event", type: "number" }, { name: "packet", type: "WorldPacket" }, { name: "player", type: "Player" }], title: "Server Packet Receive", inWorldState: true },
+            { name: "SERVER_EVENT_ON_PACKET_SEND", id: "7", args: [{ name: "event", type: "number" }, { name: "packet", type: "WorldPacket" }, { name: "player", type: "Player" }], title: "Server Packet Send", inWorldState: true },
+            { name: "WORLD_EVENT_ON_OPEN_STATE_CHANGE", id: "8", args: [{ name: "event", type: "number" }, { name: "open", type: "boolean" }], title: "Open State Change", inWorldState: true },
+            { name: "WORLD_EVENT_ON_CONFIG_LOAD", id: "9", args: [{ name: "event", type: "number" }, { name: "reload", type: "boolean" }], title: "Config Load", inWorldState: true },
+            { name: "WORLD_EVENT_ON_SHUTDOWN_INIT", id: "11", args: [{ name: "event", type: "number" }, { name: "code", type: "string" }, { name: "mask", type: "number" }], title: "Shutdown Init", inWorldState: true },
+            { name: "WORLD_EVENT_ON_SHUTDOWN_CANCEL", id: "12", args: [{ name: "event", type: "number" }], title: "Shutdown Cancel", inWorldState: true },
+            { name: "WORLD_EVENT_ON_UPDATE", id: "13", args: [{ name: "event", type: "number" }, { name: "diff", type: "number" }], title: "Update", inWorldState: true },
+            { name: "WORLD_EVENT_ON_STARTUP", id: "14", args: [{ name: "event", type: "number" }], title: "Startup", inWorldState: true },
+            { name: "WORLD_EVENT_ON_SHUTDOWN", id: "15", args: [{ name: "event", type: "number" }], title: "Shutdown", inWorldState: true },
+            { name: "ELUNA_EVENT_ON_LUA_STATE_CLOSE", id: "16", args: [{ name: "event", type: "number" }], title: "Lua State Close", inWorldState: true },
+            { name: "MAP_EVENT_ON_CREATE", id: "17", args: [{ name: "event", type: "number" }, { name: "map", type: "Map" }], title: "Map Create" },
+            { name: "MAP_EVENT_ON_DESTROY", id: "18", args: [{ name: "event", type: "number" }, { name: "map", type: "Map" }], title: "Map Destroy" },
+            { name: "MAP_EVENT_ON_PLAYER_ENTER", id: "21", args: [{ name: "event", type: "number" }, { name: "map", type: "Map" }, { name: "player", type: "Player" }], title: "Map Player Enter" },
+            { name: "MAP_EVENT_ON_PLAYER_LEAVE", id: "22", args: [{ name: "event", type: "number" }, { name: "map", type: "Map" }, { name: "player", type: "Player" }], title: "Map Player Leave" },
+            { name: "MAP_EVENT_ON_UPDATE", id: "23", args: [{ name: "event", type: "number" }, { name: "map", type: "Map" }, { name: "diff", type: "number" }], title: "Map Update" },
+            { name: "TRIGGER_EVENT_ON_TRIGGER", id: "24", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "triggerId", type: "number" }], title: "Trigger" },
+            { name: "WEATHER_EVENT_ON_CHANGE", id: "25", args: [{ name: "event", type: "number" }, { name: "zoneId", type: "number" }, { name: "state", type: "number" }, { name: "grade", type: "number" }], title: "Weather Change", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_ADD", id: "26", args: [{ name: "event", type: "number" }, { name: "auctionId", type: "number" }, { name: "owner", type: "Player" }, { name: "item", type: "Item" }, { name: "expireTime", type: "number" }, { name: "buyout", type: "number" }, { name: "startBid", type: "number" }, { name: "currentBid", type: "number" }, { name: "bidderGuidLow", type: "number" }], title: "Auction Add", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_REMOVE", id: "27", args: [{ name: "event", type: "number" }, { name: "auctionId", type: "number" }, { name: "owner", type: "Player" }, { name: "item", type: "Item" }, { name: "expireTime", type: "number" }, { name: "buyout", type: "number" }, { name: "startBid", type: "number" }, { name: "currentBid", type: "number" }, { name: "bidderGuidLow", type: "number" }], title: "Auction Remove", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_SUCCESSFUL", id: "28", args: [{ name: "event", type: "number" }, { name: "auctionId", type: "number" }, { name: "owner", type: "Player" }, { name: "item", type: "Item" }, { name: "expireTime", type: "number" }, { name: "buyout", type: "number" }, { name: "startBid", type: "number" }, { name: "currentBid", type: "number" }, { name: "bidderGuidLow", type: "number" }], title: "Auction Successful", inWorldState: true },
+            { name: "AUCTION_EVENT_ON_EXPIRE", id: "29", args: [{ name: "event", type: "number" }, { name: "auctionId", type: "number" }, { name: "owner", type: "Player" }, { name: "item", type: "Item" }, { name: "expireTime", type: "number" }, { name: "buyout", type: "number" }, { name: "startBid", type: "number" }, { name: "currentBid", type: "number" }, { name: "bidderGuidLow", type: "number" }], title: "Auction Expire", inWorldState: true },
+            { name: "ADDON_EVENT_ON_MESSAGE", id: "30", args:  [{ name: "event", type: "number" }, { name: "sender", type: "number" }, { name: "type", type: "number" }, { name: "prefix", type: "string" }, { name: "msg", type: "string" }, { name: "target", type: "nil" }], title: "Addon Message", inWorldState: true },
+            { name: "WORLD_EVENT_ON_DELETE_CREATURE", id: "31", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Delete Creature", inWorldState: true },
+            { name: "WORLD_EVENT_ON_DELETE_GAMEOBJECT", id: "32", args: [{ name: "event", type: "number" }, { name: "gameObject", type: "GameObject" }], title: "Delete Gameobject", inWorldState: true },
+            { name: "ELUNA_EVENT_ON_LUA_STATE_OPEN", id: "33", args: [{ name: "event", type: "number" }], title: "Lua State Open", inWorldState: true },
+            { name: "GAME_EVENT_START", id: "34", args: [{ name: "event", type: "number" }, { name: "gameEventId", type: "number" }], title: "Game Event Start", inWorldState: true },
+            { name: "GAME_EVENT_STOP", id: "35", args: [{ name: "event", type: "number" }, { name: "gameEventId", type: "number" }], title: "Game Event Stop", inWorldState: true },
         ],
         registerHookName: "RegisterServerEvent",
         hookExtraArgs: []
@@ -389,7 +393,7 @@
     {
         category: "Spell",
         events: [
-            { name: "SPELL_EVENT_ON_CAST", id: "1", args:  [ "event", "spell", "skipCheck" ], title: "Cast" },
+            { name: "SPELL_EVENT_ON_CAST", id: "1", args: [{ name: "event", type: "number" }, { name: "spell", type: "Spell" }, { name: "skipCheck", type: "boolean" }], title: "Cast" },
         ],
         registerHookName: "RegisterSpellEvent",
         hookExtraArgs: [ "entry" ]
@@ -397,43 +401,49 @@
     {
         category: "UniqueCreature",
         events: [
-            { name: "CREATURE_EVENT_ON_ENTER_COMBAT", id: "1", args:  [ "event", "creature", "target" ], title: "Enter Combat" },
-            { name: "CREATURE_EVENT_ON_LEAVE_COMBAT", id: "2", args:  [ "event", "creature" ], title: "Leave Combat" },
-            { name: "CREATURE_EVENT_ON_TARGET_DIED", id: "3", args:  [ "event", "creature", "victim" ], title: "Target Died" },
-            { name: "CREATURE_EVENT_ON_DIED", id: "4", args:  [ "event", "creature", "killer" ], title: "Died" },
-            { name: "CREATURE_EVENT_ON_SPAWN", id: "5", args:  [ "event", "creature" ], title: "Spawn" },
-            { name: "CREATURE_EVENT_ON_REACH_WP", id: "6", args:  [ "event", "creature", "type", "id" ], title: "Reach Waypoint" },
-            { name: "CREATURE_EVENT_ON_AIUPDATE", id: "7", args:  [ "event", "creature", "diff" ], title: "AI Update" },
-            { name: "CREATURE_EVENT_ON_RECEIVE_EMOTE", id: "8", args:  [ "event", "creature", "player", "emoteId" ], title: "Receive Emote" },
-            { name: "CREATURE_EVENT_ON_DAMAGE_TAKEN", id: "9", args:  [ "event", "creature", "attacker", "damage" ], title: "Damage Taken" },
-            { name: "CREATURE_EVENT_ON_PRE_COMBAT", id: "10", args:  [ "event", "creature", "target" ], title: "Pre Combat" },
-            { name: "CREATURE_EVENT_ON_ATTACKED_AT", id: "11", args:  [ "event", "creature", "attacker" ], title: "Attacked At" },
-            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED", id: "12", args:  [ "event", "creature", "target" ], title: "Owner Attacked" },
-            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED_AT", id: "13", args:  [ "event", "creature", "attacker" ], title: "Owner Attacked At" },
-            { name: "CREATURE_EVENT_ON_HIT_BY_SPELL", id: "14", args:  [ "event", "creature", "caster", "spellId" ], title: "Hit By Spell" },
-            { name: "CREATURE_EVENT_ON_SPELL_HIT_TARGET", id: "15", args:  [ "event", "creature", "target", "spellId" ], title: "Spell Hit Target" },
-            { name: "CREATURE_EVENT_ON_JUST_SUMMONED_CREATURE", id: "19", args:  [ "event", "creature", "summon" ], title: "Just Summoned Creature" },
-            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DESPAWN", id: "20", args:  [ "event", "creature", "summon" ], title: "Summoned Creature Despawn" },
-            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DIED", id: "21", args:  [ "event", "creature", "summon", "killer" ], title: "Summoned Creature Died" },
-            { name: "CREATURE_EVENT_ON_SUMMONED", id: "22", args:  [ "event", "creature", "summoner" ], title: "Summoned" },
-            { name: "CREATURE_EVENT_ON_RESET", id: "23", args:  [ "event", "creature" ], title: "Reset" },
-            { name: "CREATURE_EVENT_ON_REACH_HOME", id: "24", args:  [ "event", "creature" ], title: "Reach Home" },
-            { name: "CREATURE_EVENT_ON_CORPSE_REMOVED", id: "26", args:  [ "event", "creature", "respawnDelay" ], title: "Corpse Removed" },
-            { name: "CREATURE_EVENT_ON_MOVE_IN_LOS", id: "27", args:  [ "event", "creature", "unit" ], title: "Move In LoS" },
-            { name: "CREATURE_EVENT_ON_DUMMY_EFFECT", id: "30", args:  [ "event", "caster", "spellId", "effIndex", "creature" ], title: "Dummy Effect" },
-            { name: "CREATURE_EVENT_ON_QUEST_ACCEPT", id: "31", args:  [ "event", "player", "creature", "quest" ], title: "Quest Accept" },
-            { name: "CREATURE_EVENT_ON_QUEST_REWARD", id: "34", args:  [ "event", "player", "creature", "quest", "opt" ], title: "Quest Reward" },
-            { name: "CREATURE_EVENT_ON_DIALOG_STATUS", id: "35", args:  [ "event", "player", "creature" ], title: "Dialog Status" },
-            { name: "CREATURE_EVENT_ON_ADD", id: "36", args:  [ "event", "creature" ], title: "Add" },
-            { name: "CREATURE_EVENT_ON_REMOVE", id: "37", args:  [ "event", "creature" ], title: "Remove" },
+            { name: "CREATURE_EVENT_ON_ENTER_COMBAT", id: "1", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "Unit" }], title: "Enter Combat" },
+            { name: "CREATURE_EVENT_ON_LEAVE_COMBAT", id: "2", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Leave Combat" },
+            { name: "CREATURE_EVENT_ON_TARGET_DIED", id: "3", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "victim", type: "Unit" }], title: "Target Died" },
+            { name: "CREATURE_EVENT_ON_DIED", id: "4", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "killer", type: "Unit" }], title: "Died" },
+            { name: "CREATURE_EVENT_ON_SPAWN", id: "5", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Spawn" },
+            { name: "CREATURE_EVENT_ON_REACH_WP", id: "6", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "type", type: "number" }, { name: "id", type: "number" }], title: "Reach Waypoint" },
+            { name: "CREATURE_EVENT_ON_AIUPDATE", id: "7", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "diff", type: "number" }], title: "AI Update" },
+            { name: "CREATURE_EVENT_ON_RECEIVE_EMOTE", id: "8", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "player", type: "Player" }, { name: "emoteId", type: "number" }], title: "Receive Emote" },
+            { name: "CREATURE_EVENT_ON_DAMAGE_TAKEN", id: "9", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "attacker", type: "Unit" }, { name: "damage", type: "number" }], title: "Damage Taken" },
+            { name: "CREATURE_EVENT_ON_PRE_COMBAT", id: "10", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "Unit" }], title: "Pre Combat" },
+            { name: "CREATURE_EVENT_ON_ATTACKED_AT", id: "11", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "attacker", type: "Unit" }], title: "Attacked At" },
+            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED", id: "12", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "Unit" }], title: "Owner Attacked" },
+            { name: "CREATURE_EVENT_ON_OWNER_ATTACKED_AT", id: "13", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "attacker", type: "Unit" }], title: "Owner Attacked At" },
+            { name: "CREATURE_EVENT_ON_HIT_BY_SPELL", id: "14", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "caster", type: "WorldObject" }, { name: "spellId", type: "number" }], title: "Hit By Spell" },
+            { name: "CREATURE_EVENT_ON_SPELL_HIT_TARGET", id: "15", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "target", type: "WorldObject" }, { name: "spellId", type: "number" }], title: "Spell Hit Target" },
+            { name: "CREATURE_EVENT_ON_JUST_SUMMONED_CREATURE", id: "19", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summon", type: "Creature" }], title: "Just Summoned Creature" },
+            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DESPAWN", id: "20", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summon", type: "Creature" }], title: "Summoned Creature Despawn" },
+            { name: "CREATURE_EVENT_ON_SUMMONED_CREATURE_DIED", id: "21", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summon", type: "Creature" }, { name: "killer", type: "Unit" }], title: "Summoned Creature Died" },
+            { name: "CREATURE_EVENT_ON_SUMMONED", id: "22", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "summoner", type: "Unit" }], title: "Summoned" },
+            { name: "CREATURE_EVENT_ON_RESET", id: "23", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Reset" },
+            { name: "CREATURE_EVENT_ON_REACH_HOME", id: "24", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Reach Home" },
+            { name: "CREATURE_EVENT_ON_CORPSE_REMOVED", id: "26", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "respawnDelay", type: "number" }], title: "Corpse Removed" },
+            { name: "CREATURE_EVENT_ON_MOVE_IN_LOS", id: "27", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }, { name: "unit", type: "Unit" }], title: "Move In LoS" },
+            { name: "CREATURE_EVENT_ON_DUMMY_EFFECT", id: "30", args: [{ name: "event", type: "number" }, { name: "caster", type: "WorldObject" }, { name: "spellId", type: "number" }, { name: "effIndex", type: "number" }, { name: "creature", type: "Creature" }], title: "Dummy Effect" },
+            { name: "CREATURE_EVENT_ON_QUEST_ACCEPT", id: "31", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }, { name: "quest", type: "Quest" }], title: "Quest Accept" },
+            { name: "CREATURE_EVENT_ON_QUEST_REWARD", id: "34", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }, { name: "quest", type: "Quest" }, { name: "opt", type: "number" }], title: "Quest Reward" },
+            { name: "CREATURE_EVENT_ON_DIALOG_STATUS", id: "35", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "creature", type: "Creature" }], title: "Dialog Status" },
+            { name: "CREATURE_EVENT_ON_ADD", id: "36", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Add" },
+            { name: "CREATURE_EVENT_ON_REMOVE", id: "37", args: [{ name: "event", type: "number" }, { name: "creature", type: "Creature" }], title: "Remove" },
         ],
         registerHookName: "RegisterUniqueCreatureEvent",
         hookExtraArgs: [ "guid", "instanceId" ]
     }
     ]);
     const singleThreadedTemplate = `
-{{@each(it) => hook}}
+{{@each(it.hooks) => hook}}
 {{@each(hook.functions) => func}}
+{{@if(it.generateLspDefinitions)}}
+{{@each(func.event.args) => arg}}
+---@param {{arg.name}} {{arg.type}}
+    
+{{/each}}
+{{/if}}
 local function {{func.name}}({{func.args}})
 
 end
@@ -441,7 +451,7 @@ end
 {{/each_}}
 {{/each_}}
 
-{{@each(it) => hook}}
+{{@each(it.hooks) => hook}}
 {{@if(hook.registrations.length > 0)}}
 -- {{hook.category}} Events
 {{/if}}
@@ -465,6 +475,12 @@ local {{identifier.name}} = {{identifier.id}};
 if (GetStateMapId() == -1 or IsCompatibilityMode()) then
 {{@each(it.hooks) => hook}}
 {{@each(hook.worldStateFunctions) => func}}
+{{@if(it.generateLspDefinitions)}}
+{{@each(func.event.args) => arg}}
+    ---@param {{arg.name}} {{arg.type}}
+
+{{/each}}
+{{/if}}
     local function {{func.name}}({{func.args}})
 
     end
@@ -491,6 +507,12 @@ end
 if (GetStateMapId() == {{ it.mapId }} or IsCompatibilityMode()) then
 {{@each(it.hooks) => hook}}
 {{@each(hook.mapStateFunctions) => func}}
+{{@if(it.generateLspDefinitions)}}
+{{@each(func.event.args) => arg}}
+    ---@param {{arg.name}} {{arg.type}}
+    
+{{/each}}
+{{/if}}
     local function {{func.name}}({{func.args}})
 
     end
@@ -521,6 +543,7 @@ end
     const code = ref('');
     const elunaState = ref('multistate');
     const mapId = ref(1);
+    const generateLspDefinitions = ref(true);
     const toast = ref(null);
     const userSnippets = ref([]);
     const singleThreadedSnippets = ref([]);
@@ -576,6 +599,11 @@ end
         generateCode();
     }
 
+    function onGenerateLspDefinitionsChanged()
+    {
+        generateCode();
+    }
+
     function onShowUserSnippet(snippet)
     {
         code.value = snippet.code.trim();
@@ -610,7 +638,8 @@ end
                     const functionName = `On${transformEventName(event.name)}`;
                     var func = {
                         name: functionName,
-                        args: event.args.join(", ")
+                        args: event.args.map(a => a.name).join(", "),
+                        event: event
                     };
                     var identifier = {
                         name: event.name,
@@ -642,7 +671,8 @@ end
 
         var result = Sqrl.render(multistateTemplate, {
             mapId: mapId.value,
-            hooks: hooks
+            hooks: hooks,
+            generateLspDefinitions: generateLspDefinitions.value
         });
         code.value = result.trim();
     }
@@ -664,7 +694,8 @@ end
                     const functionName = `On${transformEventName(event.name)}`;
                     hook.functions.push({
                         name: functionName,
-                        args: event.args.join(", ")
+                        args: event.args.map(a => a.name).join(", "),
+                        event: event
                     });
                     hook.identifiers.push({
                         name: event.name,
@@ -682,19 +713,21 @@ end
             hooks.push(hook);
         });
 
-        var result = Sqrl.render(singleThreadedTemplate, hooks);
+        var result = Sqrl.render(singleThreadedTemplate, {
+            hooks: hooks,
+            generateLspDefinitions: generateLspDefinitions.value
+        });
         code.value = result.trim();
     }
 
     function copySnippet() {
         navigator.clipboard.writeText(code.value)
         .then(() => {
-            // Yay
             var myToast = Toast.getOrCreateInstance(toast.value);
             myToast.show();
         })
         .catch(() => {
-            console.log("Couldn't copy code to clipboard");
+            console.error("Couldn't copy code to clipboard");
         });
     }
 </script>
