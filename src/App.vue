@@ -254,6 +254,8 @@
             { name: "ITEM_EVENT_ON_EXPIRE", id: "4", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "itemId", type: "number" }], title: "Expire" },
             { name: "ITEM_EVENT_ON_REMOVE", id: "5", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }], title: "Remove" },
             { name: "ITEM_EVENT_ON_ADD", id: "6", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }], title: "Add" },
+            { name: "ITEM_EVENT_ON_EQUIP", id: "7", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "slot", type: "number" }], title: "Equip" },
+            { name: "ITEM_EVENT_ON_UNEQUIP", id: "8", args: [{ name: "event", type: "number" }, { name: "player", type: "Player" }, { name: "item", type: "Item" }, { name: "slot", type: "number" }], title: "Unequip" },
         ],
         registerHookName: "RegisterItemEvent",
         hookExtraArgs: [ "entry" ]
